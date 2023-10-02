@@ -4,6 +4,20 @@ using UnityEngine;
 
 public class BoardManager : MonoBehaviour
 {
+    private static BoardManager _instance;
+    public static BoardManager Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                Debug.LogError("Board Manager is Null !!!");
+            }
+
+            return _instance;
+        }
+    }
+
     [SerializeField] GameObject _board;
 
     private float PLANE_BASE_SIZE = 10f;
@@ -54,7 +68,7 @@ public class BoardManager : MonoBehaviour
 
     private void SetCardSpot(int i, int j)
     {
-        cardSpots[i, j] = transform.position + new Vector3(transform.localScale.x * (-PLANE_BASE_SIZE / 2f + GAP_SIZE_HORIZONTAL * (j + 1) + HOLDER_WIDTH * (j + 0.5f)), 0.05f, transform.localScale.z * (-PLANE_BASE_SIZE / 2f + GAP_SIZE_VERTICAL * (i + 1) + HOLDER_HEIGHT * (i + 0.5f)));
+        cardSpots[i, j] = _board.transform.position + new Vector3(_board.transform.localScale.x * (-PLANE_BASE_SIZE / 2f + GAP_SIZE_HORIZONTAL * (j + 1) + HOLDER_WIDTH * (j + 0.5f)), 0.05f, _board.transform.localScale.z * (-PLANE_BASE_SIZE / 2f + GAP_SIZE_VERTICAL * (i + 1) + HOLDER_HEIGHT * (i + 0.5f)));
     }
 
 
