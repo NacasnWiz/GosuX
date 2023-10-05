@@ -5,10 +5,25 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Card", menuName = "ScriptableObects/Card")]
 public class CardSO : ScriptableObject
 {
-    [SerializeField]
-    private Sprite sprite;
+    public int ID;
 
-    [SerializeField]
-    private string cardName;
+    public enum Rank
+    {
+        Troupe = 2,
+        Héros = 3,
+        Immortel = 5
+    }
+
+    public enum Clan
+    {
+
+    }
+
+    public Material spriteMaterial;
+    //public Material spriteBack;
+
+    public string cardName;
+    public Rank rank;
+
 
 }

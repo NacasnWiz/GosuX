@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6118791388701910168}
   - component: {fileID: 756355122205342001}
   m_Layer: 0
-  m_Name: DummyCard
+  m_Name: Card
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,8 +30,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 12}
-  m_LocalScale: {x: 16, y: 19, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 17, y: 22, z: 1}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: bdcdce9d9ceab424b8971208d5191723, type: 2}
+  - {fileID: 2100000, guid: a2c3b98f90d5e59478c24571744a9f4c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -119,6 +119,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b037f481e900c24cad1ccf731239ca9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardSO: {fileID: 11400000, guid: 2ab84578603c823419d4c404caae0da6, type: 2}
+  <_cardSO>k__BackingField: {fileID: 0}
   meshCollider: {fileID: 6118791388701910168}
   meshRenderer: {fileID: 2817258343099739809}
+  <baseScale>k__BackingField: {x: 17, y: 1, z: 22}
+  isHovered: 0
+  isInHand: 0

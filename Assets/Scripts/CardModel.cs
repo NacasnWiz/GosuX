@@ -2,22 +2,65 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(MeshRenderer))]
+[RequireComponent(typeof(MeshCollider))]
 public class CardModel : MonoBehaviour
 {
-    [SerializeField] private CardSO cardSO;
+    [field : SerializeField]
+    public CardSO _cardSO { get; private set; }
 
-    [SerializeField] private MeshCollider meshCollider;
+    public MeshCollider meshCollider;
+    public MeshRenderer meshRenderer;
 
-    [SerializeField] private MeshRenderer meshRenderer;
-    
-    public void Set(CardSO so)
+    [field : SerializeField]
+    public Vector3 baseScale { get; private set; } = new Vector3(17f, 1f, 22f);
+
+    public bool isHovered = false;
+    public bool isInHand = false;
+
+    private void Reset()
     {
-        cardSO = so;
+        meshRenderer = GetComponent<MeshRenderer>();
+        meshCollider = GetComponent<MeshCollider>();
     }
 
-    private void OnMouseOver()
+    public void Set(CardSO so)
     {
-        transform.position += Vector3.up * 5f;
+        _cardSO = so;
+        meshRenderer.material = _cardSO.spriteMaterial;
+    }
+
+    private void OnMouseEnter()
+    {
+        isHovered = true;
+
+        if (isInHand)
+        {
+            GameManager.Instance.playerHand.ShowCardOver(transform);
+        }
+        
+        Debug.Log("Hovered " + gameObject.name);
+    }
+
+    private void OnMouseExit()
+    {
+        isHovered = false;
+
+        if (isInHand)
+        {
+            GameManager.Instance.playerHand.AdjustCardsPos();//maybe bad architecture idk
+        }
+
+        Debug.Log("No longer hovers " + _cardSO.cardName);
+    }
+
+    private void OnMouseDown()
+    {
+        if (isInHand)
+        {
+            GameManager.Instance.playerHand.AdjustCardsPos();//maybe bad architecture idk
+            GameManager.Instance.playerHand.PlayCard(this);
+        }
     }
 
 }

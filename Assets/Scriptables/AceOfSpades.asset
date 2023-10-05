@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be7604833704b1d4eb56d68f30031889, type: 3}
   m_Name: AceOfSpades
   m_EditorClassIdentifier: 
-  sprite: {fileID: 21300000, guid: cded57c67eb29f945a8ee69c26716a2d, type: 3}
+  ID: 0
+  spriteMaterial: {fileID: 2100000, guid: bdcdce9d9ceab424b8971208d5191723, type: 2}
   cardName: Ace of Spades
+  rank: 5

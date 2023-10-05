@@ -3,7 +3,11 @@ guid: 6b037f481e900c24cad1ccf731239ca9
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - <_cardSO>k__BackingField: {instanceID: 0}
+  - cardPrefab: {instanceID: 0}
+  - meshCollider: {instanceID: 0}
+  - meshRenderer: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
