@@ -43,7 +43,7 @@ public class BoardManager : MonoBehaviour
     GameObject dummy;
 
     [SerializeField]
-    private Vector3 cardScaleOnBoard = new Vector3(14.75f, 19f, 1f);
+    private Vector3 cardScaleOnBoard = new Vector3(14f, 19f, 1f);
 
 
     private void Awake()
