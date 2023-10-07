@@ -377,7 +377,7 @@ GameObject:
   - component: {fileID: 482530561}
   - component: {fileID: 482530560}
   m_Layer: 5
-  m_Name: Title
+  m_Name: TitlePanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -739,7 +739,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
+  m_Intensity: 0.9
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -1051,6 +1051,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0c78c09f209c1834083b543ead1e9f41, type: 2}
   - {fileID: 11400000, guid: e26d7005c2751ba4f80bc493d7d159f4, type: 2}
   - {fileID: 11400000, guid: 2ab84578603c823419d4c404caae0da6, type: 2}
+  - {fileID: 11400000, guid: ba07120a67458e74190aa31036d3a773, type: 2}
   testSpawn: {fileID: 2135431422}
   dummy: {fileID: 2318195797342203747, guid: aaaa39ab730f6ea42945b661a772adae, type: 3}
   <playerDeck>k__BackingField: {fileID: 444730072}
@@ -1433,7 +1434,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -50}
+  m_AnchoredPosition: {x: 0, y: -75}
   m_SizeDelta: {x: 1000, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1110728131
@@ -1638,6 +1639,71 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 182.499, y: -452.301, z: -2162.394}
+--- !u!1001 &1339219367
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 756355122205342001, guid: abf398c8193cf144ebb10f1c3a384c8b, type: 3}
+      propertyPath: <_cardSO>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: ba07120a67458e74190aa31036d3a773, type: 2}
+    - target: {fileID: 2817258343099739809, guid: abf398c8193cf144ebb10f1c3a384c8b, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 6f3ba1344b3b65f4ba0c45a996f38d84, type: 2}
+    - target: {fileID: 3058700811206698764, guid: abf398c8193cf144ebb10f1c3a384c8b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3058700811206698764, guid: abf398c8193cf144ebb10f1c3a384c8b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3058700811206698764, guid: abf398c8193cf144ebb10f1c3a384c8b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 56.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3058700811206698764, guid: abf398c8193cf144ebb10f1c3a384c8b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 3058700811206698764, guid: abf398c8193cf144ebb10f1c3a384c8b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 3058700811206698764, guid: abf398c8193cf144ebb10f1c3a384c8b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3058700811206698764, guid: abf398c8193cf144ebb10f1c3a384c8b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3058700811206698764, guid: abf398c8193cf144ebb10f1c3a384c8b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 3058700811206698764, guid: abf398c8193cf144ebb10f1c3a384c8b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3058700811206698764, guid: abf398c8193cf144ebb10f1c3a384c8b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8937412900915318495, guid: abf398c8193cf144ebb10f1c3a384c8b, type: 3}
+      propertyPath: m_Name
+      value: Card
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: abf398c8193cf144ebb10f1c3a384c8b, type: 3}
 --- !u!1 &1436164675
 GameObject:
   m_ObjectHideFlags: 3
@@ -1900,7 +1966,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -50}
+  m_AnchoredPosition: {x: 0, y: -75}
   m_SizeDelta: {x: 1000, y: 50}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1663221742
@@ -2342,7 +2408,7 @@ GameObject:
   - component: {fileID: 1966301431}
   - component: {fileID: 1966301430}
   m_Layer: 5
-  m_Name: Title
+  m_Name: TitlePanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2699,3 +2765,4 @@ SceneRoots:
   - {fileID: 1183299732}
   - {fileID: 2135431426}
   - {fileID: 743200172}
+  - {fileID: 1339219367}

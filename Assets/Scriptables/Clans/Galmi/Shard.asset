@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be7604833704b1d4eb56d68f30031889, type: 3}
+  m_Name: Shard
+  m_EditorClassIdentifier: 
+  ID: 17
+  spriteMaterial: {fileID: 0}
+  sprite: {fileID: 21300000, guid: d6f7af4a474075142b3c6f8c609c6642, type: 3}
+  cardName: Shard
+  nom: Shard
+  rank: 3
+  clan: 1
+  texte: "R\xE9v\xE9lez les 4 prochaines cartes de votre deck : ajoutez \xE0 votre
+    main la carte de votre choix et placez le reste dans votre d\xE9fausse."
+  passif: 
+  "forceDeVolont\xE9": 0
+  keyWords: 05000000
+  "rel\xE8veCost": 2
+  maxActivations: 1

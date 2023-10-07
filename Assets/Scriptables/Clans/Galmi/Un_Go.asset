@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be7604833704b1d4eb56d68f30031889, type: 3}
+  m_Name: Un_Go
+  m_EditorClassIdentifier: 
+  ID: 22
+  spriteMaterial: {fileID: 0}
+  sprite: {fileID: 21300000, guid: 51abe85d158670e42847a00c10a2f00a, type: 3}
+  cardName: Un'Go
+  nom: Un_Go
+  rank: 2
+  clan: 1
+  texte: "Choisissez une carte LIBRE de niveau I ou II : son controlleur la place
+    sur le sommet de son deck. Vous pouvez choisir une carte LIBRE de niveau III
+    \xE0 la place si vous avez un *Jeton Supr\xE9matie*."
+  passif: 
+  "forceDeVolont\xE9": 0
+  keyWords: 05000000
+  "rel\xE8veCost": 2
+  maxActivations: 1

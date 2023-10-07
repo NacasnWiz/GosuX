@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be7604833704b1d4eb56d68f30031889, type: 3}
+  m_Name: "Chercheur_de_d\xE9pouilles"
+  m_EditorClassIdentifier: 
+  ID: 75
+  spriteMaterial: {fileID: 0}
+  sprite: {fileID: 21300000, guid: 2a34485aeee84c24998436a85b729aee, type: 3}
+  cardName: "Chercheurs de d\xE9pouilles"
+  nom: "Chercheurs_de_d\xE9pouilles"
+  rank: 2
+  clan: 6
+  texte: "Ajoutez \xE0 votre main tous les exemplaires d'une carte avec le m\xEAme
+    nom depuis votre d\xE9fausse."
+  passif: 
+  "forceDeVolont\xE9": 0
+  keyWords: 00000000
+  "rel\xE8veCost": 2
+  maxActivations: 1

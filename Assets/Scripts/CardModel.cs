@@ -18,6 +18,11 @@ public class CardModel : MonoBehaviour
     public bool isHovered = false;
     public bool isInHand = false;
 
+
+    public int currentActivations;
+    public int battleValue;
+
+
     private void Reset()
     {
         meshRenderer = GetComponent<MeshRenderer>();
@@ -28,6 +33,12 @@ public class CardModel : MonoBehaviour
     {
         _cardSO = so;
         meshRenderer.material = _cardSO.spriteMaterial;
+    }
+
+    [ContextMenu("Set to assigned SO (Inspector only intended")]
+    private void Set()
+    {
+        Set(_cardSO);
     }
 
     private void OnMouseEnter()

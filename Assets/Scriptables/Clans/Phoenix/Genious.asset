@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be7604833704b1d4eb56d68f30031889, type: 3}
+  m_Name: Genious
+  m_EditorClassIdentifier: 
+  ID: 59
+  spriteMaterial: {fileID: 0}
+  sprite: {fileID: 0}
+  cardName: Genious
+  nom: Genious
+  rank: 3
+  clan: 5
+  texte: "Chaque joueur choisit un clan et m\xE9lange toutes les cartes correspondantes
+    depuis sa d\xE9fausse avec son deck, puis piochez 2 cartes."
+  passif: 
+  "forceDeVolont\xE9": 0
+  keyWords: 
+  "rel\xE8veCost": 2
+  maxActivations: 0

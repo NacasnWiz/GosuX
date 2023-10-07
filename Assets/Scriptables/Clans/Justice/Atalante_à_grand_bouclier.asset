@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be7604833704b1d4eb56d68f30031889, type: 3}
+  m_Name: "Atalante_\xE0_grand_bouclier"
+  m_EditorClassIdentifier: 
+  ID: 41
+  spriteMaterial: {fileID: 0}
+  sprite: {fileID: 21300000, guid: ac8220d09b81bd949a38682e71d08d07, type: 3}
+  cardName: "Atalante \xE0 grand bouclier"
+  nom: "Atalante_\xE0_grand_bouclier"
+  rank: 2
+  clan: 3
+  texte: 
+  passif: "vous pouvez d\xE9fausser cette carte de votre main pour annuler l'activation
+    d'une carte adverse avec un *Jeton d'Activation*"
+  "forceDeVolont\xE9": 1
+  keyWords: 06000000
+  "rel\xE8veCost": 1
+  maxActivations: 0

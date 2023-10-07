@@ -27,6 +27,7 @@ public class UIManager : MonoBehaviour
     private List<CardModel> _displayedCards = new List<CardModel>();
 
     private GameObject currentPanel;
+    private bool isDisplayingCards = false;
 
 
     private static UIManager _instance;
@@ -76,6 +77,11 @@ public class UIManager : MonoBehaviour
 
     private void DisplayCards(GameObject panel, List<CardSO> cards)
     {
+        if(isDisplayingCards)
+        {
+            return;
+        }
+
         OpenPanel(panel);
         for (int indexCard = 0; indexCard < cards.Count; ++indexCard)
         {
@@ -90,12 +96,14 @@ public class UIManager : MonoBehaviour
 
         panel.SetActive(true);
         currentPanel = panel;
+        isDisplayingCards = true;
     }
 
     private void CloseCurrentPanel()
     {
         currentPanel.SetActive(false);
         currentPanel = null;
+        isDisplayingCards = false;
     }
 
     [ContextMenu("Readjust cards")]

@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be7604833704b1d4eb56d68f30031889, type: 3}
+  m_Name: Nio
+  m_EditorClassIdentifier: 
+  ID: 81
+  spriteMaterial: {fileID: 0}
+  sprite: {fileID: 21300000, guid: c9ba32a5f59513e4ea0d3cc176c60854, type: 3}
+  cardName: Nio
+  nom: Nio
+  rank: 3
+  clan: 7
+  texte: "Copiez l'effet d'une carte adjacente, puis capturez la carte copi\xE9e."
+  passif: 
+  "forceDeVolont\xE9": 0
+  keyWords: 03000000
+  "rel\xE8veCost": 3
+  maxActivations: 0

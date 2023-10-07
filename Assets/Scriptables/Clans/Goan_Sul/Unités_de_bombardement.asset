@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be7604833704b1d4eb56d68f30031889, type: 3}
+  m_Name: "Unit\xE9s_de_bombardement"
+  m_EditorClassIdentifier: 
+  ID: 33
+  spriteMaterial: {fileID: 0}
+  sprite: {fileID: 21300000, guid: e63fd5424809a0d49b1fd1bd09587854, type: 3}
+  cardName: "Unit\xE9s de bombardement"
+  nom: "Unit\xE9s_de_bombardement"
+  rank: 2
+  clan: 2
+  texte: "Chaque joueur sacrifie une de ses cartes LIBRE. Vous pouvez d\xE9clencher
+    cet effet une seconde fois si vous avez un *Jeton Supr\xE9matie*."
+  passif: 
+  "forceDeVolont\xE9": 0
+  keyWords: 01000000
+  "rel\xE8veCost": 2
+  maxActivations: 1
