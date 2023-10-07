@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
 
 public class Hand : MonoBehaviour
 {
@@ -18,6 +17,8 @@ public class Hand : MonoBehaviour
     [SerializeField]
     private List<CardModel> cardsHeld =  new List<CardModel>();
 
+    [field : SerializeField]
+    public GameManager.Players owner { get; private set; }
 
     private void Start()
     {
@@ -44,6 +45,8 @@ public class Hand : MonoBehaviour
         card.isInHand = true;
 
         cardsHeld.Add(card);
+
+        AdjustCardsPos();
     }
 
     private void AddCard(CardModel card)
@@ -78,11 +81,11 @@ public class Hand : MonoBehaviour
 
     public void PlayCard(CardModel cardInHand)
     {
-        if (!BoardManager.Instance.CanReceiveCard(cardInHand._cardSO))
+        if (!BoardManager.Instance.CanReceiveCard(cardInHand._cardSO, owner))
         {
             return;
         }
-        BoardManager.Instance.ReceiveCardPlayed(cardInHand);
+        BoardManager.Instance.ReceiveCardPlayed(cardInHand, owner);
 
         cardInHand.isInHand = false;
         RemoveCard(cardsHeld.IndexOf(cardInHand));

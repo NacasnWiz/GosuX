@@ -16,14 +16,14 @@ public class CardSO : ScriptableObject
 
     public enum Clan
     {
-        Abhilasha,
-        Galmi,
-        Goan_Sul,
-        Justice,
-        Narashima,
-        Phoenix,
-        Tomorrow,
-        Xi_an
+        Abhilasha = 0,
+        Galmi = 1,
+        Goan_Sul = 2,
+        Justice = 3,
+        Narashima = 4,
+        Phoenix = 5,
+        Tomorrow = 6,
+        Xi_an = 7,
     }
 
     public enum KeyWord

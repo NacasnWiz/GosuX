@@ -6,9 +6,14 @@ using UnityEngine;
 public class UIManager : MonoBehaviour
 {
     [SerializeField]
-    private GameObject _discardPilePanel;
+    private GameObject _playerDiscardPilePanel;
     [SerializeField]
-    private GameObject _deckPanel;
+    private GameObject _playerDeckPanel;
+    [SerializeField]
+    private GameObject _opponentDiscardPilePanel;
+    [SerializeField]
+    private GameObject _opponentDeckPanel;
+
 
     [SerializeField]
     private int CARDS_PER_ROW = 6;
@@ -65,14 +70,35 @@ public class UIManager : MonoBehaviour
     }
 
 
-    public void DisplayDeckCards(List<CardSO> cards)
+    public void DisplayDeckCards(List<CardSO> cards, GameManager.Players possessor)
     {
-        DisplayCards(_deckPanel, cards);
+        switch (possessor)
+        {
+            case GameManager.Players.Player:
+                DisplayCards(_playerDeckPanel, cards);
+                break;
+            case GameManager.Players.Opponent:
+                DisplayCards(_opponentDeckPanel, cards);
+                break;
+
+            default: break;
+        }
+        
     }
 
-    public void DisplayDiscardPileCards(List<CardSO> cards)
+    public void DisplayDiscardPileCards(List<CardSO> cards, GameManager.Players possessor)
     {
-        DisplayCards(_discardPilePanel, cards);
+        switch (possessor)
+        {
+            case GameManager.Players.Player:
+                DisplayCards(_playerDiscardPilePanel, cards);
+                break;
+            case GameManager.Players.Opponent:
+                DisplayCards(_opponentDiscardPilePanel, cards);
+                break;
+
+            default: break;
+        }
     }
 
     private void DisplayCards(GameObject panel, List<CardSO> cards)
@@ -164,6 +190,12 @@ public class UIManager : MonoBehaviour
             Destroy(card.gameObject);
         }
         _displayedCards.Clear();
+    }
+
+
+    public void OnSeeOpponentButtonClicked()
+    {
+        
     }
 
 }

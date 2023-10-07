@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class GameManager : MonoBehaviour
 {
@@ -19,6 +21,12 @@ public class GameManager : MonoBehaviour
     }
 
     //[field : SerializeField] public Camera _camera { get; private set; }//will have public methods accessed via _instance
+
+    public enum Players
+    {
+        Player = 1,
+        Opponent = -1
+    }
 
 
     //===== Info in Editor ====
@@ -42,6 +50,7 @@ public class GameManager : MonoBehaviour
     private GameObject dummy;
     //========================
 
+
     //==== Faking it Material ====
     //[field : SerializeField]
     //public Transform playerBoardAnchor { get; private set; }
@@ -49,13 +58,39 @@ public class GameManager : MonoBehaviour
 
     //========================
 
+    public bool isOnPlayer { get; private set; } = false;
+
+
+    [SerializeField]
+    private Dictionary<CardSO.Clan, List<CardSO>> ALL_CLANS_CARDS = new Dictionary<CardSO.Clan, List<CardSO>>();
+
+
     [field : SerializeField]
     public Deck playerDeck { get; private set; }
     [field : SerializeField]
     public Hand playerHand { get; private set; }
+    [field: SerializeField]
+    public CinemachineVirtualCamera playerCamera { get; private set; }
+
+
+    [field: SerializeField]
+    public Deck opponentDeck { get; private set; }
+    //[field: SerializeField]
+    //public Hand opponentHand { get; private set; }
+    [field: SerializeField]
+    public CinemachineVirtualCamera opponentCamera { get; private set; }
+
 
     [field: SerializeField]
     public CardModel cardPrefab { get; private set; }
+
+
+    [SerializeField]
+    private CardSO.Clan[] playerClans = new CardSO.Clan[3];
+    [SerializeField]
+    private CardSO.Clan[] opponentClans = new CardSO.Clan[3];
+    [SerializeField]
+    private CardSO.Clan[] unplayedClans = new CardSO.Clan[2];
 
 
     private void Awake()
@@ -68,13 +103,50 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        SetClansCardsLists();
+    }
+
+    private void SetClansCardsLists()
+    {
+        foreach (CardSO.Clan clan in Enum.GetValues(typeof(CardSO.Clan)))
+        {
+            ALL_CLANS_CARDS.Add(clan, new List<CardSO>());
+            for (int i = 0; i < 11; ++i)
+            {
+                ALL_CLANS_CARDS[clan].Add(ALL_CARDS_LIST[i + (int)clan * 11]);
+            }
+        }
     }
 
     // Start is called before the first frame update
     void Start()
     {
+        FillDeck(playerDeck, playerClans);
+        playerDeck.ShuffleDeck();
+        FillDeck(opponentDeck, opponentClans);
+        opponentDeck.ShuffleDeck();
+        
+
+
         playerHand.DrawCards(7);
     }
+
+
+
+    private void FillDeck(Deck deck, CardSO.Clan[] clans)
+    {
+        foreach (CardSO.Clan clan in clans)
+        {
+            AddCardsToDeck(deck, ALL_CLANS_CARDS[clan]);
+        }
+    }
+
+    private void AddCardsToDeck(Deck deck, List<CardSO> cards)
+    {
+        deck.AddCards(cards);
+    }
+
 
     public CardModel CreateCard(CardSO so, Transform parent)
     {

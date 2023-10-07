@@ -11,12 +11,11 @@ public class Deck : MonoBehaviour
     private List<CardSO> cardsInDeckShuffled;
 
     [SerializeField]
-    private int DECK_STARTING_SIZE = 20;//dummy
+    GameManager.Players owner;
 
 
     private void Start()
     {
-        FillDeckDummy();
         ShuffleDeck();
     }
 
@@ -27,11 +26,11 @@ public class Deck : MonoBehaviour
         Shuffle(cardsInDeck);
     }
 
-    public void FillDeckDummy()
+    public void AddCards(List<CardSO> cards)
     {
-        for (int i = 0; i < DECK_STARTING_SIZE; i++)
+        foreach (CardSO card in cards)
         {
-            cardsInDeck.Add(GameManager.Instance.ALL_CARDS_LIST[i % GameManager.Instance.ALL_CARDS_LIST.Length]);
+            cardsInDeck.Add(card);
         }
     }
 
@@ -46,7 +45,7 @@ public class Deck : MonoBehaviour
     private void OnMouseDown()
     {
         ActualiseShuffledDeck();
-        UIManager.Instance.DisplayDeckCards(cardsInDeckShuffled);
+        UIManager.Instance.DisplayDeckCards(cardsInDeckShuffled, owner);
     }
 
     private void ActualiseShuffledDeck()

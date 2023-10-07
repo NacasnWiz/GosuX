@@ -32,7 +32,19 @@ public class CardModel : MonoBehaviour
     public void Set(CardSO so)
     {
         _cardSO = so;
-        meshRenderer.material = _cardSO.spriteMaterial;
+
+        //// assume "sprite" is your Sprite object
+        //var croppedTexture = new Texture2D((int)_cardSO.sprite.rect.width, (int)_cardSO.sprite.rect.height);
+
+        //var pixels = _cardSO.sprite.texture.GetPixels((int)_cardSO.sprite.textureRect.x,
+        //                                        (int)_cardSO.sprite.textureRect.y,
+        //                                        (int)_cardSO.sprite.textureRect.width,
+        //                                        (int)_cardSO.sprite.textureRect.height);
+
+        //croppedTexture.SetPixels(pixels);
+        //croppedTexture.Apply();
+
+        meshRenderer.material.mainTexture = _cardSO.sprite.texture;
     }
 
     [ContextMenu("Set to assigned SO (Inspector only intended")]
@@ -50,7 +62,7 @@ public class CardModel : MonoBehaviour
             GameManager.Instance.playerHand.ShowCardOver(transform);
         }
         
-        Debug.Log("Hovered " + gameObject.name);
+        Debug.Log("Hovered " + _cardSO.cardName);
     }
 
     private void OnMouseExit()
@@ -69,8 +81,8 @@ public class CardModel : MonoBehaviour
     {
         if (isInHand)
         {
-            GameManager.Instance.playerHand.AdjustCardsPos();//maybe bad architecture idk
             GameManager.Instance.playerHand.PlayCard(this);
+            GameManager.Instance.playerHand.AdjustCardsPos();//maybe bad architecture idk
         }
     }
 
