@@ -19,6 +19,9 @@ public class Army : MonoBehaviour
 
     private Dictionary<CardSO.Rank, List<CardModel>> rows = new Dictionary<CardSO.Rank, List<CardModel>>();
 
+    [field : SerializeField]
+    public GameManager.Players owner { get; private set; }
+
     [SerializeField]
     private GameObject dummy;
 
@@ -126,8 +129,40 @@ public class Army : MonoBehaviour
         }
 
 
-        return true;
+        bool containsTroupeOfSameClan = ContainsClan(rows[CardSO.Rank.Troupe], cardSO.clan);
+        switch (cardSO.rank)
+        {
+            case CardSO.Rank.Troupe:
+                if (!containsTroupeOfSameClan)
+                {
+                    RulesManager.Instance.RequireDiscard(owner, 2);
+                }
+                return true;
 
+            case CardSO.Rank.Héros:
+                return containsTroupeOfSameClan && rows[CardSO.Rank.Troupe].Count > rows[CardSO.Rank.Héros].Count;
+
+            case CardSO.Rank.Immortel:
+                bool containsHérosOfSameClan = ContainsClan(rows[CardSO.Rank.Héros], cardSO.clan);
+                return containsTroupeOfSameClan && containsHérosOfSameClan && rows[CardSO.Rank.Troupe].Count >= rows[CardSO.Rank.Héros].Count && rows[CardSO.Rank.Héros].Count > rows[CardSO.Rank.Immortel].Count;
+        }
+
+        return true;
+    }
+
+    private bool ContainsClan(List<CardModel> row, CardSO.Clan clan)
+    {
+        bool output = false;
+
+        foreach (CardModel card in row)
+        {
+            if (card._cardSO.clan == clan)
+            {
+                output = true;
+            }
+        }
+
+        return output;
     }
 
     private Vector2Int DetermineSpotToPlay(CardSO cardSO)

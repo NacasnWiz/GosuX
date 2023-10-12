@@ -20,7 +20,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    //[field : SerializeField] public Camera _camera { get; private set; }//will have public methods accessed via _instance
 
     public enum Players
     {
@@ -28,41 +27,19 @@ public class GameManager : MonoBehaviour
         Opponent = -1
     }
 
-
-    //===== Info in Editor ====
     [field: SerializeField]
     public CardSO[] ALL_CARDS_LIST {get; private set;}
 
-    /*
-    public enum Area
-    {
-        InHand,
-        OnBoard,
-        InDeck,
-        InDiscardPile
+    [SerializeField]
+    private Dictionary<CardSO.Clan, List<CardSO>> ALL_CLANS_CARDS = new Dictionary<CardSO.Clan, List<CardSO>>();
 
-    }
-    *///Enum of game Areas, wrong architechture I think
 
     [SerializeField]
     public GameObject testSpawn;
     [SerializeField]
     private GameObject dummy;
-    //========================
-
-
-    //==== Faking it Material ====
-    //[field : SerializeField]
-    //public Transform playerBoardAnchor { get; private set; }
-
-
-    //========================
 
     public bool isOnPlayer { get; private set; } = false;
-
-
-    [SerializeField]
-    private Dictionary<CardSO.Clan, List<CardSO>> ALL_CLANS_CARDS = new Dictionary<CardSO.Clan, List<CardSO>>();
 
 
     [field : SerializeField]
@@ -126,8 +103,6 @@ public class GameManager : MonoBehaviour
         playerDeck.ShuffleDeck();
         FillDeck(opponentDeck, opponentClans);
         opponentDeck.ShuffleDeck();
-        
-
 
         playerHand.DrawCards(7);
     }
@@ -160,5 +135,6 @@ public class GameManager : MonoBehaviour
     {
         return CreateCard(so, transform);
     }
+
 
 }

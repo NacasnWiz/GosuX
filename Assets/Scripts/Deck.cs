@@ -31,6 +31,10 @@ public class Deck : MonoBehaviour
         foreach (CardSO card in cards)
         {
             cardsInDeck.Add(card);
+            if(card.rank == CardSO.Rank.Troupe)
+            {
+                cardsInDeck.Add(card);
+            }
         }
     }
 
