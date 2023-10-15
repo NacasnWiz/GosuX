@@ -10,8 +10,8 @@ public class Deck : MonoBehaviour
     [SerializeField]
     private List<CardSO> cardsInDeckShuffled;
 
-    [SerializeField]
-    GameManager.Players owner;
+    [field: SerializeField]
+    public GameManager.Players owner { get; private set; }
 
 
     private void Start()
@@ -36,6 +36,15 @@ public class Deck : MonoBehaviour
                 cardsInDeck.Add(card);
             }
         }
+    }
+
+    public void AddCards(List<CardModel> cardModels)
+    {
+        foreach(CardModel card in cardModels)
+        {
+            cardsInDeck.Add(card._cardSO);
+        }
+        ShuffleDeck();
     }
 
     public CardSO Draw()

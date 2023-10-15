@@ -122,6 +122,12 @@ MonoBehaviour:
   <_cardSO>k__BackingField: {fileID: 0}
   meshCollider: {fileID: 6118791388701910168}
   meshRenderer: {fileID: 2817258343099739809}
-  <baseScale>k__BackingField: {x: 17, y: 1, z: 22}
-  isHovered: 0
+  <baseScale>k__BackingField: {x: 17, y: 22, z: 1}
+  isShownOver: 0
   isInHand: 0
+  isInToDiscard: 0
+  currentActivations: 0
+  battleValue: 0
+  costToEnter: 0
+  hoverHeight: 1
+  hoverScaleFactor: 1.1

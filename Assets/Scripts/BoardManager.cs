@@ -88,14 +88,14 @@ public class BoardManager : MonoBehaviour
 
 
 
-    public bool CanReceiveCard(CardSO cardSO, GameManager.Players owner)
+    public bool CanReceiveCard(CardModel cardToReceive, GameManager.Players owner)
     {
         switch (owner)
         {
             case GameManager.Players.Player:
-                return playerArmy.CanReceiveCard(cardSO);
+                return playerArmy.CanReceiveCard(cardToReceive);
             case GameManager.Players.Opponent:
-                return opponentArmy.CanReceiveCard(cardSO);
+                return opponentArmy.CanReceiveCard(cardToReceive);
 
             default:
                 Debug.Log("default case CanReceiveCard from BoardManager : false.");

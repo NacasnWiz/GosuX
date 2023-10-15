@@ -19,26 +19,51 @@ public class RulesManager : MonoBehaviour
         }
     }
 
-    private GameManager gameManager;
 
-    public enum Cards
+    public enum GamePhases
     {
+        PlayPhase,
+        DiscardPhase,
 
     }
 
-    public Dictionary<int, Cards> CardRegister { get; private set; } = new Dictionary<int, Cards>();//Nope, ce registre est déjà géré dans l'enum (Abhishala = 1, etc.) Il faut un registre des effets des cartes
+    [SerializeField]
+    public GamePhases currentPhase = GamePhases.PlayPhase;
+
+
 
     public Dictionary<GameManager.Players, int> toDiscard { get; private set; } = new Dictionary<GameManager.Players, int>();
 
     private void Awake()
     {
         _instance = this;
-        gameManager = GameManager.Instance;
     }
 
     private void Start()
     {
         CreateToDiscardDictionnary();
+    }
+
+    private void Update()
+    {
+        if(IsPendingDiscards() && currentPhase != GamePhases.DiscardPhase)//Highly sub-optimal to check this at every frame
+        {
+            EnterDiscardPhase();
+        }
+        if(!IsPendingDiscards() && currentPhase == GamePhases.DiscardPhase)
+        {
+            ExitDiscardPhase();
+        }
+    }
+
+    private void ExitDiscardPhase()
+    {
+        currentPhase = GamePhases.PlayPhase;
+    }
+
+    private bool IsPendingDiscards()
+    {
+        return toDiscard[GameManager.Players.Player] > 0 || toDiscard[GameManager.Players.Opponent] > 0;
     }
 
     private void CreateToDiscardDictionnary()
@@ -50,6 +75,17 @@ public class RulesManager : MonoBehaviour
     public void RequireDiscard(GameManager.Players who, int cost)
     {
         toDiscard[who] += cost;
+    }
+
+    public void RegisterDiscard(GameManager.Players who, int nbDiscarded)
+    {
+        toDiscard[who] -= nbDiscarded;
+    }
+
+    private void EnterDiscardPhase()
+    {
+        currentPhase = GamePhases.DiscardPhase;
+        UIManager.Instance.DisplayToDiscardPanel();
     }
 
 }

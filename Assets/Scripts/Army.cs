@@ -97,45 +97,47 @@ public class Army : MonoBehaviour
         }
     }
 
-    public void ReceiveCardPlayed(CardModel cardModel)
+    public void ReceiveCardPlayed(CardModel cardToReceive)
     {
-        if (!CanReceiveCard(cardModel._cardSO))
+        if (!CanReceiveCard(cardToReceive))
         {
             return;
         }
 
-        Vector2Int spot = DetermineSpotToPlay(cardModel._cardSO);
+        RulesManager.Instance.RequireDiscard(owner, cardToReceive.costToEnter);
 
-        cardModel.transform.position = cardSpots[spot[0], spot[1]];
+        Vector2Int spot = DetermineSpotToPlay(cardToReceive._cardSO);
+        cardToReceive.transform.position = cardSpots[spot[0], spot[1]];
 
-        cardModel.transform.SetParent(transform);
-        cardModel.transform.localScale = BoardManager.Instance.cardScaleOnBoard;
-        rows[cardModel._cardSO.rank].Add(cardModel);
+        cardToReceive.transform.SetParent(transform);
+        cardToReceive.transform.localScale = BoardManager.Instance.cardScaleOnBoard;
+        rows[cardToReceive._cardSO.rank].Add(cardToReceive);
     }
 
 
 
-    public bool CanReceiveCard(CardSO cardSO)
+    public bool CanReceiveCard(CardModel cardToReceive)
     {
-        if (!rows.ContainsKey(cardSO.rank))
+        if (!rows.ContainsKey(cardToReceive._cardSO.rank))
         {
-            Debug.Log("The board doesn't have a row for this card's rank. " + cardSO.cardName + " Cannot be played");
+            Debug.Log("The board doesn't have a row for this card's rank. " + cardToReceive._cardSO.cardName + " Cannot be played");
             return false;
         }
-        if (rows[cardSO.rank].Count >= CARDS_IN_ROW)
+        if (rows[cardToReceive._cardSO.rank].Count >= CARDS_IN_ROW)
         {
-            Debug.Log("The " + cardSO.rank.ToString() + " army row is full. It already contains " + rows[cardSO.rank].Count + " cards, for a maximal capacity of " + CARDS_IN_ROW);
+            Debug.Log("The " + cardToReceive._cardSO.rank.ToString() + " army row is full. It already contains " + rows[cardToReceive._cardSO.rank].Count + " cards, for a maximal capacity of " + CARDS_IN_ROW);
             return false;
         }
 
 
-        bool containsTroupeOfSameClan = ContainsClan(rows[CardSO.Rank.Troupe], cardSO.clan);
-        switch (cardSO.rank)
+        bool containsTroupeOfSameClan = ContainsClan(rows[CardSO.Rank.Troupe], cardToReceive._cardSO.clan);
+        switch (cardToReceive._cardSO.rank)
         {
             case CardSO.Rank.Troupe:
-                if (!containsTroupeOfSameClan)
+                if (rows[CardSO.Rank.Troupe].Count > 0 && !containsTroupeOfSameClan)
                 {
-                    RulesManager.Instance.RequireDiscard(owner, 2);
+                    cardToReceive.costToEnter = 2;
+                    //RulesManager.Instance.RequireDiscard(owner, 2);
                 }
                 return true;
 
@@ -143,7 +145,7 @@ public class Army : MonoBehaviour
                 return containsTroupeOfSameClan && rows[CardSO.Rank.Troupe].Count > rows[CardSO.Rank.Héros].Count;
 
             case CardSO.Rank.Immortel:
-                bool containsHérosOfSameClan = ContainsClan(rows[CardSO.Rank.Héros], cardSO.clan);
+                bool containsHérosOfSameClan = ContainsClan(rows[CardSO.Rank.Héros], cardToReceive._cardSO.clan);
                 return containsTroupeOfSameClan && containsHérosOfSameClan && rows[CardSO.Rank.Troupe].Count >= rows[CardSO.Rank.Héros].Count && rows[CardSO.Rank.Héros].Count > rows[CardSO.Rank.Immortel].Count;
         }
 

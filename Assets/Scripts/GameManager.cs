@@ -33,6 +33,12 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private Dictionary<CardSO.Clan, List<CardSO>> ALL_CLANS_CARDS = new Dictionary<CardSO.Clan, List<CardSO>>();
 
+    [SerializeField]
+    private CardSO.Clan[] playerClans = new CardSO.Clan[3];
+    [SerializeField]
+    private CardSO.Clan[] opponentClans = new CardSO.Clan[3];
+    [SerializeField]
+    private CardSO.Clan[] unplayedClans = new CardSO.Clan[2];
 
     [SerializeField]
     public GameObject testSpawn;
@@ -47,27 +53,34 @@ public class GameManager : MonoBehaviour
     [field : SerializeField]
     public Hand playerHand { get; private set; }
     [field: SerializeField]
+    public DiscardPile playerDiscardPile { get; private set; }
+    [field: SerializeField]
     public CinemachineVirtualCamera playerCamera { get; private set; }
 
 
     [field: SerializeField]
     public Deck opponentDeck { get; private set; }
-    //[field: SerializeField]
-    //public Hand opponentHand { get; private set; }
+    [field: SerializeField]
+    public Hand opponentHand { get; private set; }
+    [field: SerializeField]
+    public DiscardPile opponentDiscardPile { get; private set; }
     [field: SerializeField]
     public CinemachineVirtualCamera opponentCamera { get; private set; }
+
+    
+    public Dictionary<Players, Deck> decks { get; private set; } = new Dictionary<Players, Deck>();
+    public Dictionary<Players, DiscardPile> discardPiles { get; private set; } = new Dictionary<Players, DiscardPile>();
+    public Dictionary<Players, Hand> hands { get; private set; } = new Dictionary<Players, Hand>();
+    public Dictionary<Players, CinemachineVirtualCamera> cameras { get; private set; } = new Dictionary<Players, CinemachineVirtualCamera>();
+
 
 
     [field: SerializeField]
     public CardModel cardPrefab { get; private set; }
 
+    [field: SerializeField]
+    public Players currentPlayer { get; private set; }
 
-    [SerializeField]
-    private CardSO.Clan[] playerClans = new CardSO.Clan[3];
-    [SerializeField]
-    private CardSO.Clan[] opponentClans = new CardSO.Clan[3];
-    [SerializeField]
-    private CardSO.Clan[] unplayedClans = new CardSO.Clan[2];
 
 
     private void Awake()
@@ -99,6 +112,8 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        CreatePlayersDictionaries();
+
         FillDeck(playerDeck, playerClans);
         playerDeck.ShuffleDeck();
         FillDeck(opponentDeck, opponentClans);
@@ -107,7 +122,17 @@ public class GameManager : MonoBehaviour
         playerHand.DrawCards(7);
     }
 
-
+    private void CreatePlayersDictionaries()
+    {
+        decks.Add(Players.Player, playerDeck);
+        decks.Add(Players.Opponent, opponentDeck);
+        discardPiles.Add(Players.Player, playerDiscardPile);
+        discardPiles.Add(Players.Opponent, opponentDiscardPile);
+        hands.Add(Players.Player, playerHand);
+        hands.Add(Players.Opponent, opponentHand);
+        cameras.Add(Players.Player, playerCamera);
+        cameras.Add(Players.Opponent, opponentCamera);
+    }
 
     private void FillDeck(Deck deck, CardSO.Clan[] clans)
     {
@@ -123,7 +148,7 @@ public class GameManager : MonoBehaviour
     }
 
 
-    public CardModel CreateCard(CardSO so, Transform parent)
+    public CardModel CreateCardModel(CardSO so, Transform parent)
     {
         CardModel card = Instantiate(cardPrefab, parent);
         card.Set(so);
@@ -131,9 +156,9 @@ public class GameManager : MonoBehaviour
         return card;
     }
 
-    public CardModel CreateCard(CardSO so)
+    public CardModel CreateCardModel(CardSO so)
     {
-        return CreateCard(so, transform);
+        return CreateCardModel(so, transform);
     }
 
 

@@ -10,11 +10,6 @@ public class Hand : MonoBehaviour
     private float MIN_HEIGHT = -0.5f;
 
     [SerializeField]
-    private float hoverHeight = 5f;
-    [SerializeField]
-    private float hoverScaleFactor = 1.1f;
-
-    [SerializeField]
     private List<CardModel> cardsHeld =  new List<CardModel>();
 
     [field : SerializeField]
@@ -35,12 +30,32 @@ public class Hand : MonoBehaviour
 
     private void DrawFromDeck()
     {
-        AddCard(GameManager.Instance.playerDeck.Draw());
+        AddCard(GameManager.Instance.decks[owner].Draw());
+    }
+
+    [ContextMenu("Redraw")]
+    public void ReDraw()
+    {
+        GameManager.Instance.decks[owner].AddCards(cardsHeld);
+        
+        foreach (CardModel card in cardsHeld)
+        {
+            Destroy(card.gameObject);
+        }
+        cardsHeld.Clear();
+
+        DrawCards(7);
     }
 
     private void AddCard(CardSO so)
     {
-        CardModel card = GameManager.Instance.CreateCard(so, transform);
+        CardModel card = GameManager.Instance.CreateCardModel(so);
+        AddCard(card);
+    }
+
+    public void AddCard(CardModel card)
+    {
+        card.owner = owner;
         card.transform.SetParent(transform);
         card.isInHand = true;
 
@@ -49,51 +64,68 @@ public class Hand : MonoBehaviour
         AdjustCardsPos();
     }
 
-    private void AddCard(CardModel card)
-    {
-        AddCard(card._cardSO);
-    }
-
+    [ContextMenu("Adjust Cards Pos")]
     public void AdjustCardsPos()
     {
-
         for (int i = 0; i < cardsHeld.Count; ++i)
         {
-            AdjustCardPos(i);
+            if (!cardsHeld[i].isInToDiscard)
+                AdjustCardPos(i);
         }
     }
 
-    private void AdjustCardPos(int indexInHand)
+    private void AdjustCardPos(int indexInHand)//TODO: problem when holding 8+ cards, the top one goes a bit out of screen
     {
         float offsetZ = (MAX_HEIGHT - MIN_HEIGHT) / cardsHeld.Count;
-        float offsetY = 5f;
+        float offsetY = 0.1f;
 
         cardsHeld[indexInHand].transform.localPosition = (MIN_HEIGHT + indexInHand * offsetZ) * Vector3.forward - indexInHand * offsetY * Vector3.up;
-        cardsHeld[indexInHand].transform.localScale = new Vector3 (17f,22f,1f);//NEED TO WORK ON THE WHOLE SCALING THING.
-    }
-
-    public void ShowCardOver(Transform cardTransform)
-    {
-        cardTransform.position = new Vector3(cardTransform.position.x, hoverHeight, cardTransform.position.z);
-
-        cardTransform.localScale *= hoverScaleFactor;
     }
 
     public void PlayCard(CardModel cardInHand)
     {
-        if (!BoardManager.Instance.CanReceiveCard(cardInHand._cardSO, owner))
+        if (!BoardManager.Instance.CanReceiveCard(cardInHand, owner))
         {
             return;
         }
+
+        RemoveCard(cardInHand);
+
         BoardManager.Instance.ReceiveCardPlayed(cardInHand, owner);
 
-        cardInHand.isInHand = false;
-        RemoveCard(cardsHeld.IndexOf(cardInHand));
     }
 
     private void RemoveCard(int index)
     {
+        if(index < 0 || index >= cardsHeld.Count)
+        {
+            return;
+        }
+        cardsHeld[index].isInHand = false;
         cardsHeld.RemoveAt(index);
+        AdjustCardsPos();
+    }
+
+    public void RemoveCard(CardModel cardInHand)
+    {
+        RemoveCard(cardsHeld.IndexOf(cardInHand));
+    }
+
+    public void RemoveCards(List<CardModel> cards)
+    {
+        foreach (CardModel card in cards)
+        {
+            RemoveCard(card);
+        }
+    }
+
+
+    public void PutCardToDiscard(CardModel cardInHand)
+    {
+        if (UIManager.Instance.NeedToDiscardMoreCards())
+        {
+            UIManager.Instance.ReceiveCardToDiscard(cardInHand);
+        }
     }
 
 

@@ -1,0 +1,9 @@
+TODO: (small)
+DONE - remplacer toutes les occurences de "playersHand", "playersDeck", etc. par l'owner associé
+DONE - Rendre fonctionnel l'affichage de la défausse
+
+TODO: (medium)
+_faible - Army doit connaître en permanence les cartes LIBRE
+
+TODO: (hard)
+- Implémenter une boucle de jeu Player -> Opponent -> Player etc. (les cartes sont toujours sans effet)
