@@ -1,9 +1,16 @@
 TODO: (small)
 DONE - remplacer toutes les occurences de "playersHand", "playersDeck", etc. par l'owner associé
 DONE - Rendre fonctionnel l'affichage de la défausse
+- Gérer l'affichage simultané des panels dans l'UIManager, typiquement si je regarde mon deck/ma défausse pendant que je choisis les cartes à défausser.
+DONE - Interdire la pose d'une carte si on n'a pas de quoi payer.
+
 
 TODO: (medium)
 _faible - Army doit connaître en permanence les cartes LIBRE
 
 TODO: (hard)
 - Implémenter une boucle de jeu Player -> Opponent -> Player etc. (les cartes sont toujours sans effet)
+
+
+TODO: (TRISTAN)
+- Make UI elements block OnMouseEnter/Stay/Exit, OnMouseDown/Up

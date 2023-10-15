@@ -139,7 +139,7 @@ public class Army : MonoBehaviour
                     cardToReceive.costToEnter = 2;
                     //RulesManager.Instance.RequireDiscard(owner, 2);
                 }
-                return true;
+                return cardToReceive.costToEnter < GameManager.Instance.hands[owner].GetHandSize();
 
             case CardSO.Rank.Héros:
                 return containsTroupeOfSameClan && rows[CardSO.Rank.Troupe].Count > rows[CardSO.Rank.Héros].Count;

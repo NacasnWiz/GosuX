@@ -89,9 +89,8 @@ public class Hand : MonoBehaviour
             return;
         }
 
-        RemoveCard(cardInHand);
-
         BoardManager.Instance.ReceiveCardPlayed(cardInHand, owner);
+        RemoveCard(cardInHand);
 
     }
 
@@ -128,5 +127,8 @@ public class Hand : MonoBehaviour
         }
     }
 
-
+    public int GetHandSize()
+    {
+        return cardsHeld.Count;
+    }
 }
