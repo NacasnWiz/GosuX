@@ -72,6 +72,8 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         RulesManager.Instance.ev_EnterDiscardPhase.AddListener(() => DisplayToDiscardPanel());
+        Deck.ev_DeckClicked.AddListener((deck) => DisplayDeckCards(deck.cardsInDeck, deck.owner.ID));
+        DiscardPile.ev_DiscardPileClicked.AddListener((discardPile) => DisplayDiscardPileCards(discardPile.cardsInDiscardPile, discardPile.owner.ID));
     }
 
     private void Awake()
@@ -236,7 +238,7 @@ public class UIManager : MonoBehaviour
 
     public void DisplayToDiscardPanel()
     {
-        nb_cardsToDiscard = RulesManager.Instance.toDiscard[GameManager.Instance.currentPlayer];
+        nb_cardsToDiscard = RulesManager.Instance.toDiscard[GameManager.Instance.currentPlayer.ID];
         OpenPanel(_toDiscardPanel);
         AdjustToDiscardText();
     }
@@ -300,7 +302,7 @@ public class UIManager : MonoBehaviour
 
     public void OnConfirmDiscardButtonClick()
     {
-        RulesManager.Instance.RegisterDiscard(GameManager.Instance.currentPlayer, nb_cardsToDiscard);
+        RulesManager.Instance.RegisterDiscard(GameManager.Instance.currentPlayer.ID, nb_cardsToDiscard);
         FlushCardsDiscarding();
 
         confirmDiscardButton.gameObject.SetActive(false);
@@ -311,8 +313,8 @@ public class UIManager : MonoBehaviour
     {      
         foreach(CardModel card in cardsDiscarding)
         {
-            GameManager.Instance.players[GameManager.Instance.currentPlayer]._hand.RemoveCard(card);
-            GameManager.Instance.players[GameManager.Instance.currentPlayer]._discardPile.AddCard(card);
+            GameManager.Instance.players[GameManager.Instance.currentPlayer.ID]._hand.RemoveCard(card);
+            GameManager.Instance.players[GameManager.Instance.currentPlayer.ID]._discardPile.AddCard(card);
             Destroy(card.gameObject);
         }
         cardsDiscarding.Clear();
@@ -323,7 +325,7 @@ public class UIManager : MonoBehaviour
     {
         cardsDiscarding.Remove(card);
         card.isInToDiscard = false;
-        GameManager.Instance.players[GameManager.Instance.currentPlayer]._hand.AdjustCardsPos();
+        GameManager.Instance.players[GameManager.Instance.currentPlayer.ID]._hand.AdjustCardsPos();
         AdjustDiscardingDisplay();
     }
 

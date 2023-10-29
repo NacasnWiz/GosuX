@@ -12,7 +12,7 @@ public class Hand : MonoBehaviour
     private List<CardModel> cardsHeld =  new List<CardModel>();
 
     [field : SerializeField]
-    public GameManager.Players owner { get; private set; }
+    public Player owner { get; private set; }
 
     private void Start()
     {
@@ -29,13 +29,13 @@ public class Hand : MonoBehaviour
 
     private void DrawFromDeck()
     {
-        AddCard(GameManager.Instance.players[owner]._deck.Draw());
+        AddCard(owner._deck.Draw());
     }
 
     [ContextMenu("Redraw")]
     public void ReDraw()
     {
-        GameManager.Instance.players[owner]._deck.AddCards(cardsHeld);
+        owner._deck.AddCards(cardsHeld);
         
         foreach (CardModel card in cardsHeld)
         {

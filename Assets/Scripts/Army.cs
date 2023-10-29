@@ -20,10 +20,10 @@ public class Army : MonoBehaviour
 
     public Vector3[,] cardSpots { get; private set; }
 
-    private Dictionary<CardSO.Rank, List<CardModel>> rows = new Dictionary<CardSO.Rank, List<CardModel>>();
+    private Dictionary<CardSO.Rank, List<CardModel>> rows = new();
 
     [field : SerializeField]
-    public GameManager.Players owner { get; private set; }
+    public Player owner { get; private set; }
 
     [SerializeField]
     private GameObject dummy;
@@ -86,8 +86,8 @@ public class Army : MonoBehaviour
         float horizontalPos = board.transform.localScale.x * (-PLANE_BASE_SIZE / 2f + GAP_SIZE_HORIZONTAL * (j + 1) + HOLDER_WIDTH * (j + 0.5f));
         float verticalPos = board.transform.localScale.z * (-PLANE_BASE_SIZE / 2f + GAP_SIZE_VERTICAL * (i + 1) + HOLDER_HEIGHT * (i + 0.5f));
 
-        horizontalPos *= owner == GameManager.Players.Player ? 1f : -1f;
-        verticalPos *= owner == GameManager.Players.Player ? 1f : -1f;
+        horizontalPos *= owner.ID == GameManager.Players.Player ? 1f : -1f;
+        verticalPos *= owner.ID == GameManager.Players.Player ? 1f : -1f;
 
         cardSpots[i, j] = board.transform.position + new Vector3(horizontalPos, 1.05f, verticalPos);
     }
@@ -109,7 +109,7 @@ public class Army : MonoBehaviour
 
         if (rows[CardSO.Rank.Troupe].Count > 0 && !ContainsClan(CardSO.Rank.Troupe, cardToReceive._cardSO.clan))
         {
-            RulesManager.Instance.RequireDiscard(owner, RulesManager.Instance.costOfNewClanTroupe);
+            RulesManager.Instance.RequireDiscard(owner.ID, RulesManager.Instance.costOfNewClanTroupe);
         }
 
         Vector2Int spot = DetermineSpotToPlay(cardToReceive._cardSO);
@@ -142,7 +142,7 @@ public class Army : MonoBehaviour
             case CardSO.Rank.Troupe:
                 if (rows[CardSO.Rank.Troupe].Count > 0 && !containsTroupeOfSameClan)
                 {
-                    return RulesManager.Instance.costOfNewClanTroupe < GameManager.Instance.players[owner]._hand.GetHandSize();
+                    return RulesManager.Instance.costOfNewClanTroupe < owner._hand.GetHandSize();
                 }
                 else
                 {
@@ -182,7 +182,20 @@ public class Army : MonoBehaviour
         return ContainsClan(CardSO.Rank.Troupe, clan) && ContainsClan(CardSO.Rank.Héros, clan) && ContainsClan(CardSO.Rank.Immortel, clan);
     }
 
+    public int CalculateBattleScore()
+    {
+        int score = 0;
 
+        foreach(var row in rows.Values)
+        {
+            foreach(var card in row)
+            {
+                score += card.battleValue;
+            }
+        }
+
+        return score;
+    }
 
     private Vector2Int DetermineSpotToPlay(CardSO cardSO)
     {

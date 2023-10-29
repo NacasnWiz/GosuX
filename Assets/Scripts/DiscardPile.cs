@@ -1,14 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class DiscardPile : MonoBehaviour
 {
     [field: SerializeField]
-    public GameManager.Players owner { get; private set; }
+    public Player owner { get; private set; }
 
     [field : SerializeField]
     public List<CardSO> cardsInDiscardPile { get; private set; } = new List<CardSO>();
+
+
+    public static UnityEvent<DiscardPile> ev_DiscardPileClicked = new();
+
 
     public void AddCards(List<CardSO> cards)
     {
@@ -38,6 +43,6 @@ public class DiscardPile : MonoBehaviour
 
     private void OnMouseDown()
     {
-        UIManager.Instance.DisplayDiscardPileCards(cardsInDiscardPile, owner);
+        ev_DiscardPileClicked.Invoke(this);
     }
 }

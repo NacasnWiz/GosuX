@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Deck : MonoBehaviour
 {
@@ -11,7 +12,10 @@ public class Deck : MonoBehaviour
     public List<CardSO> cardsInDeckShuffled { get; private set; }
 
     [field: SerializeField]
-    public GameManager.Players owner { get; private set; }
+    public Player owner { get; private set; }
+
+
+    public static UnityEvent<Deck> ev_DeckClicked = new();
 
 
     private void Start()
@@ -26,14 +30,19 @@ public class Deck : MonoBehaviour
         Shuffle(cardsInDeck);
     }
 
+    public void AddCard(CardSO card)
+    {
+        cardsInDeck.Add(card);
+    }
+
     public void AddCards(List<CardSO> cards)
     {
         foreach (CardSO card in cards)
         {
-            cardsInDeck.Add(card);
+            AddCard(card);
             if (card.rank == CardSO.Rank.Troupe)
             {
-                cardsInDeck.Add(card);
+                AddCard(card);
             }
         }
     }
@@ -58,7 +67,7 @@ public class Deck : MonoBehaviour
     private void OnMouseDown()
     {
         ActualiseShuffledDeck();
-        UIManager.Instance.DisplayDeckCards(cardsInDeckShuffled, owner);
+        ev_DeckClicked.Invoke(this);
     }
 
     private void ActualiseShuffledDeck()

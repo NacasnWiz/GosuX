@@ -18,7 +18,19 @@ public class Player : MonoBehaviour
     [field: SerializeField]
     public Army _army { get; private set; }
 
+    public bool hasPassed = false;
+
     //Camera ?
+
+    public void AddCardsToDeck(List<CardSO> cards)
+    {
+        _deck.AddCards(cards);
+    }
+
+    public void AddCard(CardSO card)
+    {
+        _deck.AddCard(card);
+    }
 
     public void ShuffleDeck()
     {
@@ -28,6 +40,14 @@ public class Player : MonoBehaviour
     public void DrawCards(int nb_toDraw)
     {
         _hand.DrawCards(nb_toDraw);
+    }
+
+    [ContextMenu("Calculate Battle Score")]
+    public int CalculateArmyScore()
+    {
+        int score = _army.CalculateBattleScore();
+        Debug.Log(ID.ToString() + " currently totalizes " + score + " battle points");
+        return score;
     }
 
 }

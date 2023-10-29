@@ -54,14 +54,6 @@ public class RulesManager : MonoBehaviour
         CreateToDiscardDictionnary();
     }
 
-    private void Update()
-    {
-        if(currentPhase != GamePhases.DiscardPhase && IsPendingDiscards())//I highly dislike to check this at every frame
-        {
-            EnterDiscardPhase();
-        }
-    }
-
     private bool IsPendingDiscards()
     {
         return toDiscard[GameManager.Players.Player] > 0 || toDiscard[GameManager.Players.Opponent] > 0;
@@ -100,23 +92,28 @@ public class RulesManager : MonoBehaviour
         }
         else
         {
-            GameManager.Instance.players[card.owner]._hand.PutCardToDiscard(card);
-            //GameManager.Instance.hands[card.owner].PutCardToDiscard(card);
+            card.owner._hand.PutCardToDiscard(card);
         }
     }
 
     private void PlayCardFromHand(CardModel card)
     {
-        if (GameManager.Instance.players[card.owner]._army.CanReceiveCard(card))
+        if (card.owner._army.CanReceiveCard(card))
         {
-            GameManager.Instance.players[card.owner]._army.ReceiveCardPlayed(card);
-            GameManager.Instance.players[card.owner]._hand.RemoveCard(card);
+            card.owner._army.ReceiveCardPlayed(card);
+            card.owner._hand.RemoveCard(card);
 
 
             //card.PlayCardEffect();//NEXT FEATURE TO IMPLEMENT
+            if (currentPhase != GamePhases.DiscardPhase && IsPendingDiscards())//I highly dislike to check this at every frame
+            {
+                EnterDiscardPhase();
+            }
+            else
+            {
+                ev_CurrentPlayerHasPlayed.Invoke();
+            }
 
-
-            ev_CurrentPlayerHasPlayed.Invoke();
         }
     }
 
@@ -143,6 +140,7 @@ public class RulesManager : MonoBehaviour
         if (!IsPendingDiscards())
         {
             ExitDiscardPhase();
+            ev_CurrentPlayerHasPlayed.Invoke();
         }
     }
 

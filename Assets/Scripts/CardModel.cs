@@ -8,7 +8,7 @@ using UnityEngine.Events;
 [RequireComponent(typeof(MeshCollider))]
 public class CardModel : MonoBehaviour //TODO review encapsulation of public members once the script will be in function
 {
-    public GameManager.Players owner;
+    public Player owner;
 
     [field : SerializeField]
     public CardSO _cardSO { get; private set; }
@@ -48,6 +48,7 @@ public class CardModel : MonoBehaviour //TODO review encapsulation of public mem
     public void Set(CardSO so)
     {
         _cardSO = so;
+        battleValue = (int)_cardSO.rank;
 
         meshRenderer.material.mainTexture = _cardSO.sprite.texture;
     }
@@ -110,7 +111,7 @@ public class CardModel : MonoBehaviour //TODO review encapsulation of public mem
         isShownOver = false;
         if(isInHand)
         {
-            GameManager.Instance.players[owner]._hand.AdjustCardsPos();//Not best
+            owner._hand.AdjustCardsPos();//Not best
         }
     }
 

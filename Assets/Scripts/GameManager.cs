@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using Cinemachine;
 
 public class GameManager : MonoBehaviour
@@ -41,6 +42,7 @@ public class GameManager : MonoBehaviour
     private CardSO.Clan[] unplayedClans = new CardSO.Clan[2];
 
     public int nb_cardsDrawnStart = 7;
+    public int nb_maxTurnsAfterPass = 3;
 
 
     [field: SerializeField] public Board _board { get; private set; }
@@ -50,8 +52,8 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private GameObject dummy;
 
-    public bool isOnPlayer { get; private set; } = false;
-
+    //public bool isOnPlayer { get; private set; } = false;
+    private int nb_turnsAfterPassed;
 
     [SerializeField]
     private Player _player;
@@ -75,9 +77,13 @@ public class GameManager : MonoBehaviour
     public CardModel cardPrefab { get; private set; }
 
     [field: SerializeField]
-    public Players currentPlayer { get; private set; }
+    public Player currentPlayer { get; private set; }
 
     public bool currentPlayerHasPlayed = false;
+
+
+    public UnityEvent ev_RoundEnded = new();
+
 
     private void Awake()
     {
@@ -136,19 +142,15 @@ public class GameManager : MonoBehaviour
 
     private void FillDeck(Player player)
     {
-        Deck deck = player.ID == Players.Player ? _player._deck : _opponent._deck;
         List<CardSO.Clan> clans = player.clansList;
 
         foreach (CardSO.Clan clan in clans)
         {
-            AddCardsToDeck(deck, ALL_CLANS_CARDS[clan]);
+            player.AddCardsToDeck(ALL_CLANS_CARDS[clan]);
         }
     }
 
-    private void AddCardsToDeck(Deck deck, List<CardSO> cards)
-    {
-        deck.AddCards(cards);
-    }
+
 
     public CardModel CreateCardModel(CardSO so, Transform parent)
     {
@@ -169,6 +171,12 @@ public class GameManager : MonoBehaviour
         opponentCamera.Priority = 15;
     }
 
+    public void Pass()
+    {
+        currentPlayer.hasPassed = true;
+        EndTurn();
+    }
+
     public void ReturnToPlayer()
     {
         opponentCamera.Priority = 10;
@@ -177,19 +185,42 @@ public class GameManager : MonoBehaviour
 
     public void EndTurn()
     {
-        if(currentPlayer == Players.Player)
+        if (players[GetOtherPlayer(currentPlayer).ID].hasPassed)
         {
-            currentPlayer = Players.Opponent;
+            ++nb_turnsAfterPassed;
         }
-        else if(currentPlayer == Players.Opponent)
+        else
         {
-            currentPlayer = Players.Player;
+            currentPlayer = GetOtherPlayer(currentPlayer);
         }
-
-        //is equivalent to
-        //currentPlayer = (Players)(-(int)currentPlayer);
 
         currentPlayerHasPlayed = false;
+
+        if(nb_turnsAfterPassed >= nb_maxTurnsAfterPass || (currentPlayer.hasPassed && GetOtherPlayer(currentPlayer).hasPassed))
+        {
+            EndRound();
+        }
+    }
+
+    private Player GetOtherPlayer(Player player)
+    {
+        if (player.ID == Players.Player)
+        {
+            return players[Players.Opponent];
+        }
+        else
+        {
+            return players[Players.Player];
+        }
+
+        //could also use
+        //currentPlayer = players[(Players)(-(int)currentPlayer)];
+    }
+
+    private void EndRound()
+    {
+        Debug.Log("The round has ended.");
+        ev_RoundEnded.Invoke();
     }
 
 }
