@@ -93,7 +93,7 @@ public class GameManager : MonoBehaviour
     [field: SerializeField]
     public Players currentPlayer { get; private set; }
 
-    public bool currentPlauerHasPlayed = false;
+    public bool currentPlayerHasPlayed = false;
 
     private void Awake()
     {
@@ -125,6 +125,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         CreatePlayersDictionaries();
+        RulesManager.Instance.ev_CurrentPlayerHasPlayed.AddListener(() => { Debug.Log("current player has played."); currentPlayerHasPlayed = true; });
 
         FillDeck(playerDeck, playerClans);
         playerDeck.ShuffleDeck();
@@ -133,6 +134,14 @@ public class GameManager : MonoBehaviour
 
         playerHand.DrawCards(nb_cardsDrawnStart);
         opponentHand.DrawCards(nb_cardsDrawnStart);
+    }
+
+    private void LateUpdate()
+    {
+        if(currentPlayerHasPlayed && RulesManager.Instance.currentPhase == RulesManager.GamePhases.PlayPhase)
+        {
+            EndTurn();
+        }
     }
 
     private void CreatePlayersDictionaries()
@@ -166,7 +175,6 @@ public class GameManager : MonoBehaviour
         deck.AddCards(cards);
     }
 
-
     public CardModel CreateCardModel(CardSO so, Transform parent)
     {
         CardModel card = Instantiate(cardPrefab, parent);
@@ -192,16 +200,21 @@ public class GameManager : MonoBehaviour
         playerCamera.Priority = 15;
     }
 
-    public void EndTurn(Players who)
+    public void EndTurn()
     {
-        if(who == Players.Player)
+        if(currentPlayer == Players.Player)
         {
             currentPlayer = Players.Opponent;
         }
-        else if(who == Players.Opponent)
+        else if(currentPlayer == Players.Opponent)
         {
             currentPlayer = Players.Player;
         }
+
+        //is equivalent to
+        //currentPlayer = (Players)(-(int)currentPlayer);
+
+        currentPlayerHasPlayed = false;
     }
 
 }

@@ -9,7 +9,6 @@ public class Hand : MonoBehaviour
     [SerializeField]
     private float MIN_HEIGHT = -0.5f;
 
-    [SerializeField]
     private List<CardModel> cardsHeld =  new List<CardModel>();
 
     [field : SerializeField]
@@ -56,7 +55,7 @@ public class Hand : MonoBehaviour
     public void AddCard(CardModel card)
     {
         card.owner = owner;
-        card.transform.SetParent(transform);
+        card.transform.SetParent(transform, false);
         card.isInHand = true;
 
         cardsHeld.Add(card);

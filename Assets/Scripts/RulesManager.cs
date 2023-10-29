@@ -30,12 +30,16 @@ public class RulesManager : MonoBehaviour
     public static int CARDS_IN_ROW { get; private set; } = 5;
     public static int NUMBER_OF_ROWS { get; private set; } = 3;
 
+    public int costOfNewClanTroupe { get; private set; } = 2;
 
     [SerializeField]
     public GamePhases currentPhase = GamePhases.PlayPhase;
 
     public Dictionary<GameManager.Players, int> toDiscard { get; private set; } = new Dictionary<GameManager.Players, int>();
 
+
+    public UnityEvent ev_EnterDiscardPhase = new();
+    public UnityEvent ev_CurrentPlayerHasPlayed = new();
 
 
     private void Awake()
@@ -52,35 +56,37 @@ public class RulesManager : MonoBehaviour
 
     private void Update()
     {
-        if(IsPendingDiscards() && currentPhase != GamePhases.DiscardPhase)//Highly sub-optimal to check this at every frame
+        if(currentPhase != GamePhases.DiscardPhase && IsPendingDiscards())//I highly dislike to check this at every frame
         {
             EnterDiscardPhase();
         }
-        if(!IsPendingDiscards() && currentPhase == GamePhases.DiscardPhase)
-        {
-            ExitDiscardPhase();
-        }
+    }
+
+    private bool IsPendingDiscards()
+    {
+        return toDiscard[GameManager.Players.Player] > 0 || toDiscard[GameManager.Players.Opponent] > 0;
     }
 
     private void OnCardClicked(CardModel card)
     {
-
         if (card.isInHand)
         {
             switch(currentPhase)
             {
                 case GamePhases.PlayPhase:
-                    PlayCardFromHand(card);
-                    break;
+                    if (GameManager.Instance.currentPlayer == card.owner)
+                    {
+                        PlayCardFromHand(card);
+                    }
+                    return;
                 case GamePhases.DiscardPhase:
                     PutCardInToDiscard(card);
-                    break;
+                    return;
 
                 default:
                     return;
             }
         }
-
     }
 
     private void PutCardInToDiscard(CardModel card)
@@ -97,24 +103,22 @@ public class RulesManager : MonoBehaviour
 
     private void PlayCardFromHand(CardModel card)
     {
-        if (GameManager.Instance.currentPlayer == card.owner)
+        if (GameManager.Instance.armies[card.owner].CanReceiveCard(card))
         {
-            if (GameManager.Instance.armies[card.owner].CanReceiveCard(card))
-            {
-                GameManager.Instance.armies[card.owner].ReceiveCardPlayed(card);
-                GameManager.Instance.hands[card.owner].RemoveCard(card);
-            }
+            GameManager.Instance.armies[card.owner].ReceiveCardPlayed(card);
+            GameManager.Instance.hands[card.owner].RemoveCard(card);
+
+
+            //card.PlayCardEffect();//NEXT FEATURE TO IMPLEMENT
+
+
+            ev_CurrentPlayerHasPlayed.Invoke();
         }
     }
 
     private void ExitDiscardPhase()
     {
         currentPhase = GamePhases.PlayPhase;
-    }
-
-    private bool IsPendingDiscards()
-    {
-        return toDiscard[GameManager.Players.Player] > 0 || toDiscard[GameManager.Players.Opponent] > 0;
     }
 
     private void CreateToDiscardDictionnary()
@@ -131,12 +135,17 @@ public class RulesManager : MonoBehaviour
     public void RegisterDiscard(GameManager.Players who, int nbDiscarded)
     {
         toDiscard[who] -= nbDiscarded;
+
+        if (!IsPendingDiscards())
+        {
+            ExitDiscardPhase();
+        }
     }
 
     private void EnterDiscardPhase()
     {
         currentPhase = GamePhases.DiscardPhase;
-        UIManager.Instance.DisplayToDiscardPanel();
+        ev_EnterDiscardPhase.Invoke();
     }
 
 }

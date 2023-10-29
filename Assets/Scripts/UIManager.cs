@@ -68,6 +68,12 @@ public class UIManager : MonoBehaviour
         }
     }
 
+
+    private void Start()
+    {
+        RulesManager.Instance.ev_EnterDiscardPhase.AddListener(() => DisplayToDiscardPanel());
+    }
+
     private void Awake()
     {
         _instance = this;
@@ -297,6 +303,7 @@ public class UIManager : MonoBehaviour
         RulesManager.Instance.RegisterDiscard(GameManager.Instance.currentPlayer, nb_cardsToDiscard);
         FlushCardsDiscarding();
 
+        confirmDiscardButton.gameObject.SetActive(false);
         CloseCurrentPanel();
     }
 

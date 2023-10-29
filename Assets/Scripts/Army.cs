@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Army : MonoBehaviour
@@ -85,8 +86,8 @@ public class Army : MonoBehaviour
         float horizontalPos = board.transform.localScale.x * (-PLANE_BASE_SIZE / 2f + GAP_SIZE_HORIZONTAL * (j + 1) + HOLDER_WIDTH * (j + 0.5f));
         float verticalPos = board.transform.localScale.z * (-PLANE_BASE_SIZE / 2f + GAP_SIZE_VERTICAL * (i + 1) + HOLDER_HEIGHT * (i + 0.5f));
 
-        horizontalPos *= (int)transform.rotation.y == 0 ? 1f : -1f;
-        verticalPos *= (int)transform.rotation.y == 0 ? 1f : -1f;
+        horizontalPos *= owner == GameManager.Players.Player ? 1f : -1f;
+        verticalPos *= owner == GameManager.Players.Player ? 1f : -1f;
 
         cardSpots[i, j] = board.transform.position + new Vector3(horizontalPos, 1.05f, verticalPos);
     }
@@ -106,7 +107,10 @@ public class Army : MonoBehaviour
             return;
         }
 
-        RulesManager.Instance.RequireDiscard(owner, cardToReceive.costToEnter);
+        if (rows[CardSO.Rank.Troupe].Count > 0 && !ContainsClan(CardSO.Rank.Troupe, cardToReceive._cardSO.clan))
+        {
+            RulesManager.Instance.RequireDiscard(owner, RulesManager.Instance.costOfNewClanTroupe);
+        }
 
         Vector2Int spot = DetermineSpotToPlay(cardToReceive._cardSO);
         cardToReceive.transform.position = cardSpots[spot[0], spot[1]];
@@ -114,8 +118,6 @@ public class Army : MonoBehaviour
         cardToReceive.transform.SetParent(transform);
         cardToReceive.transform.localScale = boardDimensions.cardScaleOnBoard;
         rows[cardToReceive._cardSO.rank].Add(cardToReceive);
-
-        cardToReceive.PlayCardEffect();//Bad architechture but
     }   
 
 
@@ -134,31 +136,35 @@ public class Army : MonoBehaviour
         }
 
 
-        bool containsTroupeOfSameClan = ContainsClan(rows[CardSO.Rank.Troupe], cardToReceive._cardSO.clan);
+        bool containsTroupeOfSameClan = ContainsClan(CardSO.Rank.Troupe, cardToReceive._cardSO.clan);
         switch (cardToReceive._cardSO.rank)
         {
             case CardSO.Rank.Troupe:
                 if (rows[CardSO.Rank.Troupe].Count > 0 && !containsTroupeOfSameClan)
                 {
-                    cardToReceive.costToEnter = 2;
-                    //RulesManager.Instance.RequireDiscard(owner, 2);
+                    return RulesManager.Instance.costOfNewClanTroupe < GameManager.Instance.hands[owner].GetHandSize();
                 }
-                return cardToReceive.costToEnter < GameManager.Instance.hands[owner].GetHandSize();
+                else
+                {
+                    return true;
+                }
 
             case CardSO.Rank.Héros:
                 return containsTroupeOfSameClan && rows[CardSO.Rank.Troupe].Count > rows[CardSO.Rank.Héros].Count;
 
             case CardSO.Rank.Immortel:
-                bool containsHérosOfSameClan = ContainsClan(rows[CardSO.Rank.Héros], cardToReceive._cardSO.clan);
+                bool containsHérosOfSameClan = ContainsClan(CardSO.Rank.Héros, cardToReceive._cardSO.clan);
                 return containsTroupeOfSameClan && containsHérosOfSameClan && rows[CardSO.Rank.Troupe].Count >= rows[CardSO.Rank.Héros].Count && rows[CardSO.Rank.Héros].Count > rows[CardSO.Rank.Immortel].Count;
         }
 
         return true;
     }
 
-    private bool ContainsClan(List<CardModel> row, CardSO.Clan clan)
+    private bool ContainsClan(CardSO.Rank rank, CardSO.Clan clan)
     {
         bool output = false;
+
+        List<CardModel> row = rows[rank];
 
         foreach (CardModel card in row)
         {
@@ -170,6 +176,13 @@ public class Army : MonoBehaviour
 
         return output;
     }
+
+    private bool ContainsClan(CardSO.Clan clan)
+    {
+        return ContainsClan(CardSO.Rank.Troupe, clan) && ContainsClan(CardSO.Rank.Héros, clan) && ContainsClan(CardSO.Rank.Immortel, clan);
+    }
+
+
 
     private Vector2Int DetermineSpotToPlay(CardSO cardSO)
     {

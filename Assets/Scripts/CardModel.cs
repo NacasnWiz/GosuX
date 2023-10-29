@@ -26,8 +26,6 @@ public class CardModel : MonoBehaviour
     public int currentActivations;
     public int battleValue;
 
-    public int costToEnter = 0;
-
     [SerializeField]
     private float hoverHeight = 5f;
     private float lastPosY;
@@ -38,19 +36,10 @@ public class CardModel : MonoBehaviour
 
     public static UnityEvent<CardModel> ev_CardClicked = new();
 
-
     private void Reset()
     {
         meshRenderer = GetComponent<MeshRenderer>();
         meshCollider = GetComponent<MeshCollider>();
-    }
-
-    private void LateUpdate()
-    {
-        if(costToEnter != 0)
-        {
-            costToEnter = 0;
-        }//Seems like a rather bad architechture though because it forces the game to read this value on the same frame than it writes it over. ...which is convoluted and smelly imho
     }
 
     public void Set(CardSO so)
@@ -131,8 +120,6 @@ public class CardModel : MonoBehaviour
     public void PlayCardEffect()
     {
         _cardSO.OnPlayEffect();
-
-        GameManager.Instance.currentPlauerHasPlayed = true;
     }
 
 }
