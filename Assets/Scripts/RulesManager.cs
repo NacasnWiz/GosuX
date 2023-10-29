@@ -25,8 +25,11 @@ public class RulesManager : MonoBehaviour
     {
         PlayPhase,
         DiscardPhase,
-
     }
+
+    public static int CARDS_IN_ROW { get; private set; } = 5;
+    public static int NUMBER_OF_ROWS { get; private set; } = 3;
+
 
     [SerializeField]
     public GamePhases currentPhase = GamePhases.PlayPhase;
@@ -96,18 +99,11 @@ public class RulesManager : MonoBehaviour
     {
         if (GameManager.Instance.currentPlayer == card.owner)
         {
-            PlayCard(card);
-
-            GameManager.Instance.hands[card.owner].RemoveCard(card);
-
-        }
-    }
-
-    private void PlayCard(CardModel card)
-    {
-        if (BoardManager.Instance.CanReceiveCard(card))
-        {
-            BoardManager.Instance.ReceiveCardPlayed(card);
+            if (GameManager.Instance.armies[card.owner].CanReceiveCard(card))
+            {
+                GameManager.Instance.armies[card.owner].ReceiveCardPlayed(card);
+                GameManager.Instance.hands[card.owner].RemoveCard(card);
+            }
         }
     }
 

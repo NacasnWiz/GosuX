@@ -82,7 +82,6 @@ public class Hand : MonoBehaviour
         cardsHeld[indexInHand].transform.localPosition = (MIN_HEIGHT + indexInHand * offsetZ) * Vector3.forward - indexInHand * offsetY * Vector3.up;
     }
 
-
     private void RemoveCard(int index)
     {
         if(index < 0 || index >= cardsHeld.Count)

@@ -43,6 +43,8 @@ public class GameManager : MonoBehaviour
     public int nb_cardsDrawnStart = 7;
 
 
+    [field: SerializeField] public Board _board { get; private set; }
+
     [SerializeField]
     public GameObject testSpawn;
     [SerializeField]
@@ -53,10 +55,13 @@ public class GameManager : MonoBehaviour
 
     [field : SerializeField]
     public Deck playerDeck { get; private set; }
+    [field: SerializeField]
+    public DiscardPile playerDiscardPile { get; private set; }
     [field : SerializeField]
     public Hand playerHand { get; private set; }
     [field: SerializeField]
-    public DiscardPile playerDiscardPile { get; private set; }
+    public Army playerArmy { get; private set; }
+
     [field: SerializeField]
     public CinemachineVirtualCamera playerCamera { get; private set; }
 
@@ -64,16 +69,20 @@ public class GameManager : MonoBehaviour
     [field: SerializeField]
     public Deck opponentDeck { get; private set; }
     [field: SerializeField]
+    public DiscardPile opponentDiscardPile { get; private set; }
+    [field: SerializeField]
     public Hand opponentHand { get; private set; }
     [field: SerializeField]
-    public DiscardPile opponentDiscardPile { get; private set; }
+    public Army opponentArmy { get; private set; }
+
     [field: SerializeField]
     public CinemachineVirtualCamera opponentCamera { get; private set; }
 
     
-    public Dictionary<Players, Deck> decks { get; private set; } = new Dictionary<Players, Deck>();
-    public Dictionary<Players, DiscardPile> discardPiles { get; private set; } = new Dictionary<Players, DiscardPile>();
-    public Dictionary<Players, Hand> hands { get; private set; } = new Dictionary<Players, Hand>();
+    public Dictionary<Players, Deck> decks { get; private set; } = new();
+    public Dictionary<Players, DiscardPile> discardPiles { get; private set; } = new();
+    public Dictionary<Players, Hand> hands { get; private set; } = new();
+    public Dictionary<Players, Army> armies { get; private set; } = new();
     public Dictionary<Players, CinemachineVirtualCamera> cameras { get; private set; } = new Dictionary<Players, CinemachineVirtualCamera>();
 
 
@@ -130,10 +139,16 @@ public class GameManager : MonoBehaviour
     {
         decks.Add(Players.Player, playerDeck);
         decks.Add(Players.Opponent, opponentDeck);
+
         discardPiles.Add(Players.Player, playerDiscardPile);
         discardPiles.Add(Players.Opponent, opponentDiscardPile);
+
         hands.Add(Players.Player, playerHand);
         hands.Add(Players.Opponent, opponentHand);
+
+        armies.Add(Players.Player, playerArmy);
+        armies.Add(Players.Opponent, opponentArmy);
+
         cameras.Add(Players.Player, playerCamera);
         cameras.Add(Players.Opponent, opponentCamera);
     }

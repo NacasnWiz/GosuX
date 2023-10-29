@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Army : MonoBehaviour
 {
+    [SerializeField] private BoardDimensionsSO boardDimensions;
+
     private float PLANE_BASE_SIZE = 10f;
     //based on Plane's base width = 10
     public float GAP_SIZE_HORIZONTAL { get; private set; } = 0.25f;
@@ -35,13 +37,13 @@ public class Army : MonoBehaviour
 
     private void SetConstants()
     {
-        GAP_SIZE_HORIZONTAL = BoardManager.Instance.GAP_SIZE_HORIZONTAL;
-        GAP_SIZE_VERTICAL = BoardManager.Instance.GAP_SIZE_VERTICAL;
-        HOLDER_WIDTH = BoardManager.Instance.HOLDER_WIDTH;
-        HOLDER_HEIGHT = BoardManager.Instance.HOLDER_HEIGHT;
+        GAP_SIZE_HORIZONTAL = boardDimensions.GAP_SIZE_HORIZONTAL;
+        GAP_SIZE_VERTICAL = boardDimensions.GAP_SIZE_VERTICAL;
+        HOLDER_WIDTH = boardDimensions.HOLDER_WIDTH;
+        HOLDER_HEIGHT = boardDimensions.HOLDER_HEIGHT;
         
-        CARDS_IN_ROW = BoardManager.CARDS_IN_ROW;
-        NUMBER_OF_ROWS = BoardManager.NUMBER_OF_ROWS;
+        CARDS_IN_ROW = RulesManager.CARDS_IN_ROW;
+        NUMBER_OF_ROWS = RulesManager.NUMBER_OF_ROWS;
     }
 
 
@@ -78,7 +80,7 @@ public class Army : MonoBehaviour
 
     private void SetCardSpot(int i, int j)
     {
-        GameObject board = BoardManager.Instance._board;
+        Board board = GameManager.Instance._board;
 
         float horizontalPos = board.transform.localScale.x * (-PLANE_BASE_SIZE / 2f + GAP_SIZE_HORIZONTAL * (j + 1) + HOLDER_WIDTH * (j + 0.5f));
         float verticalPos = board.transform.localScale.z * (-PLANE_BASE_SIZE / 2f + GAP_SIZE_VERTICAL * (i + 1) + HOLDER_HEIGHT * (i + 0.5f));
@@ -110,7 +112,7 @@ public class Army : MonoBehaviour
         cardToReceive.transform.position = cardSpots[spot[0], spot[1]];
 
         cardToReceive.transform.SetParent(transform);
-        cardToReceive.transform.localScale = BoardManager.Instance.cardScaleOnBoard;
+        cardToReceive.transform.localScale = boardDimensions.cardScaleOnBoard;
         rows[cardToReceive._cardSO.rank].Add(cardToReceive);
 
         cardToReceive.PlayCardEffect();//Bad architechture but
