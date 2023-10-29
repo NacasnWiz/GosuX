@@ -33,10 +33,10 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private Dictionary<CardSO.Clan, List<CardSO>> ALL_CLANS_CARDS = new Dictionary<CardSO.Clan, List<CardSO>>();
 
-    [SerializeField]
-    private CardSO.Clan[] playerClans = new CardSO.Clan[3];
-    [SerializeField]
-    private CardSO.Clan[] opponentClans = new CardSO.Clan[3];
+    //[SerializeField]
+    //private CardSO.Clan[] playerClans = new CardSO.Clan[3];
+    //[SerializeField]
+    //private CardSO.Clan[] opponentClans = new CardSO.Clan[3];
     [SerializeField]
     private CardSO.Clan[] unplayedClans = new CardSO.Clan[2];
 
@@ -56,39 +56,16 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private Player _player;
 
-    [field : SerializeField]
-    public Deck playerDeck { get; private set; }
-    [field: SerializeField]
-    public DiscardPile playerDiscardPile { get; private set; }
-    [field : SerializeField]
-    public Hand playerHand { get; private set; }
-    [field: SerializeField]
-    public Army playerArmy { get; private set; }
-
     [field: SerializeField]
     public CinemachineVirtualCamera playerCamera { get; private set; }
 
 
     [SerializeField]
     private Player _opponent;
-    [field: SerializeField]
-    public Deck opponentDeck { get; private set; }
-    [field: SerializeField]
-    public DiscardPile opponentDiscardPile { get; private set; }
-    [field: SerializeField]
-    public Hand opponentHand { get; private set; }
-    [field: SerializeField]
-    public Army opponentArmy { get; private set; }
 
     [field: SerializeField]
     public CinemachineVirtualCamera opponentCamera { get; private set; }
 
-    
-    //public Dictionary<Players, Deck> decks { get; private set; } = new();
-    //public Dictionary<Players, DiscardPile> discardPiles { get; private set; } = new();
-    //public Dictionary<Players, Hand> hands { get; private set; } = new();
-    //public Dictionary<Players, Army> armies { get; private set; } = new();
-    //public Dictionary<Players, CinemachineVirtualCamera> cameras { get; private set; } = new();
 
     public Dictionary<Players, Player> players { get; private set; } = new();
 
@@ -131,17 +108,16 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //CreatePlayersDictionaries();
         CreatePlayersDictionary();
         RulesManager.Instance.ev_CurrentPlayerHasPlayed.AddListener(() => { Debug.Log("current player has played."); currentPlayerHasPlayed = true; });
 
-        FillDeck(playerDeck, playerClans);
-        playerDeck.ShuffleDeck();
-        FillDeck(opponentDeck, opponentClans);
-        opponentDeck.ShuffleDeck();
+        FillDeck(_player);
+        _player.ShuffleDeck();
+        FillDeck(_opponent);
+        _opponent.ShuffleDeck();
 
-        playerHand.DrawCards(nb_cardsDrawnStart);
-        opponentHand.DrawCards(nb_cardsDrawnStart);
+        _player.DrawCards(nb_cardsDrawnStart);
+        _opponent.DrawCards(nb_cardsDrawnStart);
     }
 
     private void LateUpdate()
@@ -158,26 +134,11 @@ public class GameManager : MonoBehaviour
         players.Add(Players.Opponent, _opponent);
     }
 
-    //private void CreatePlayersDictionaries()
-    //{
-    //    decks.Add(Players.Player, playerDeck);
-    //    decks.Add(Players.Opponent, opponentDeck);
-
-    //    discardPiles.Add(Players.Player, playerDiscardPile);
-    //    discardPiles.Add(Players.Opponent, opponentDiscardPile);
-
-    //    hands.Add(Players.Player, playerHand);
-    //    hands.Add(Players.Opponent, opponentHand);
-
-    //    armies.Add(Players.Player, playerArmy);
-    //    armies.Add(Players.Opponent, opponentArmy);
-
-    //    cameras.Add(Players.Player, playerCamera);
-    //    cameras.Add(Players.Opponent, opponentCamera);
-    //}
-
-    private void FillDeck(Deck deck, CardSO.Clan[] clans)
+    private void FillDeck(Player player)
     {
+        Deck deck = player.ID == Players.Player ? _player._deck : _opponent._deck;
+        List<CardSO.Clan> clans = player.clansList;
+
         foreach (CardSO.Clan clan in clans)
         {
             AddCardsToDeck(deck, ALL_CLANS_CARDS[clan]);

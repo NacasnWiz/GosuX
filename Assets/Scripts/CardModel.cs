@@ -4,14 +4,16 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(MeshRenderer))]
+//[RequireComponent(typeof(SpriteRenderer))]//TODO: replace the MeshRenderer with a SpriteRenderer instead!
 [RequireComponent(typeof(MeshCollider))]
-public class CardModel : MonoBehaviour
+public class CardModel : MonoBehaviour //TODO review encapsulation of public members once the script will be in function
 {
     public GameManager.Players owner;
 
     [field : SerializeField]
     public CardSO _cardSO { get; private set; }
 
+    //public SpriteRenderer spriteRenderer;
     public MeshCollider meshCollider;
     public MeshRenderer meshRenderer;
 
@@ -39,6 +41,7 @@ public class CardModel : MonoBehaviour
     private void Reset()
     {
         meshRenderer = GetComponent<MeshRenderer>();
+        //spriteRenderer = GetComponent<SpriteRenderer>();
         meshCollider = GetComponent<MeshCollider>();
     }
 
@@ -87,10 +90,10 @@ public class CardModel : MonoBehaviour
             return;
         }
 
-        lastPosY = transform.position.y;
+        lastPosY = transform.position.y; //of
         transform.position += Vector3.up * hoverHeight;
-        lastScaleFactor = transform.localScale.x / baseScale.x;
-        transform.localScale = baseScale * hoverScaleFactor;
+        lastScaleFactor = transform.localScale.x / baseScale.x; //oof
+        transform.localScale = baseScale * hoverScaleFactor; //oooof
 
         isShownOver = true;
     }

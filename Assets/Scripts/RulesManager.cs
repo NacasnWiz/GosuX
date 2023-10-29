@@ -80,7 +80,10 @@ public class RulesManager : MonoBehaviour
                     }
                     return;
                 case GamePhases.DiscardPhase:
-                    PutCardInToDiscard(card);
+                    if (GameManager.Instance.currentPlayer == card.owner)
+                    {
+                        PutCardInToDiscard(card);
+                    }
                     return;
 
                 default:

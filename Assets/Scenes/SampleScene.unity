@@ -857,6 +857,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25fd3ee5f48cf054bb5a729d52c91d57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <ID>k__BackingField: -1
+  clansList: 030000000400000005000000
   <_deck>k__BackingField: {fileID: 1028156330}
   <_discardPile>k__BackingField: {fileID: 1074295999}
   <_hand>k__BackingField: {fileID: 1955831328}
@@ -2188,6 +2190,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25fd3ee5f48cf054bb5a729d52c91d57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <ID>k__BackingField: 1
+  clansList: 000000000100000002000000
   <_deck>k__BackingField: {fileID: 444730072}
   <_discardPile>k__BackingField: {fileID: 1896244356}
   <_hand>k__BackingField: {fileID: 2076419724}
@@ -2490,24 +2494,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1eee82bba199d724f90db9db3d75f6e0, type: 2}
   - {fileID: 11400000, guid: c776cdb855609d6498669ca2fc35b226, type: 2}
   - {fileID: 11400000, guid: 78109f12024629049a1a8cbe84fa8cf0, type: 2}
-  playerClans: 000000000100000002000000
-  opponentClans: 030000000400000005000000
   unplayedClans: 0600000007000000
   nb_cardsDrawnStart: 7
   <_board>k__BackingField: {fileID: 1937636118}
   testSpawn: {fileID: 2135431422}
   dummy: {fileID: 2318195797342203747, guid: aaaa39ab730f6ea42945b661a772adae, type: 3}
   _player: {fileID: 743200173}
-  <playerDeck>k__BackingField: {fileID: 444730072}
-  <playerDiscardPile>k__BackingField: {fileID: 1896244356}
-  <playerHand>k__BackingField: {fileID: 2076419724}
-  <playerArmy>k__BackingField: {fileID: 1156391077}
   <playerCamera>k__BackingField: {fileID: 2086190404}
   _opponent: {fileID: 276077436}
-  <opponentDeck>k__BackingField: {fileID: 1028156330}
-  <opponentDiscardPile>k__BackingField: {fileID: 1074295999}
-  <opponentHand>k__BackingField: {fileID: 1955831328}
-  <opponentArmy>k__BackingField: {fileID: 1145301846}
   <opponentCamera>k__BackingField: {fileID: 836309156}
   <cardPrefab>k__BackingField: {fileID: 756355122205342001, guid: abf398c8193cf144ebb10f1c3a384c8b, type: 3}
   <currentPlayer>k__BackingField: 1
