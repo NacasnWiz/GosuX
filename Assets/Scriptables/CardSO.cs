@@ -59,5 +59,9 @@ public class CardSO : ScriptableObject
     public int maxActivations;
 
 
+    public void OnPlayEffect()
+    {
+        Debug.Log(nom + " has been played.");
+    }
 
 }

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: 59
   spriteMaterial: {fileID: 0}
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: 732271ca81309d644863774972131692, type: 3}
   cardName: Genious
   nom: Genious
   rank: 3

@@ -82,17 +82,6 @@ public class Hand : MonoBehaviour
         cardsHeld[indexInHand].transform.localPosition = (MIN_HEIGHT + indexInHand * offsetZ) * Vector3.forward - indexInHand * offsetY * Vector3.up;
     }
 
-    public void PlayCard(CardModel cardInHand)
-    {
-        if (!BoardManager.Instance.CanReceiveCard(cardInHand, owner))
-        {
-            return;
-        }
-
-        BoardManager.Instance.ReceiveCardPlayed(cardInHand, owner);
-        RemoveCard(cardInHand);
-
-    }
 
     private void RemoveCard(int index)
     {
@@ -108,14 +97,6 @@ public class Hand : MonoBehaviour
     public void RemoveCard(CardModel cardInHand)
     {
         RemoveCard(cardsHeld.IndexOf(cardInHand));
-    }
-
-    public void RemoveCards(List<CardModel> cards)
-    {
-        foreach (CardModel card in cards)
-        {
-            RemoveCard(card);
-        }
     }
 
 

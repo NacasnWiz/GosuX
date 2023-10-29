@@ -40,6 +40,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private CardSO.Clan[] unplayedClans = new CardSO.Clan[2];
 
+    public int nb_cardsDrawnStart = 7;
+
+
     [SerializeField]
     public GameObject testSpawn;
     [SerializeField]
@@ -81,7 +84,7 @@ public class GameManager : MonoBehaviour
     [field: SerializeField]
     public Players currentPlayer { get; private set; }
 
-
+    public bool currentPlauerHasPlayed = false;
 
     private void Awake()
     {
@@ -119,7 +122,8 @@ public class GameManager : MonoBehaviour
         FillDeck(opponentDeck, opponentClans);
         opponentDeck.ShuffleDeck();
 
-        playerHand.DrawCards(7);
+        playerHand.DrawCards(nb_cardsDrawnStart);
+        opponentHand.DrawCards(nb_cardsDrawnStart);
     }
 
     private void CreatePlayersDictionaries()
@@ -161,5 +165,28 @@ public class GameManager : MonoBehaviour
         return CreateCardModel(so, transform);
     }
 
+    public void SeeOpponent()
+    {
+        playerCamera.Priority = 10;
+        opponentCamera.Priority = 15;
+    }
+
+    public void ReturnToPlayer()
+    {
+        opponentCamera.Priority = 10;
+        playerCamera.Priority = 15;
+    }
+
+    public void EndTurn(Players who)
+    {
+        if(who == Players.Player)
+        {
+            currentPlayer = Players.Opponent;
+        }
+        else if(who == Players.Opponent)
+        {
+            currentPlayer = Players.Player;
+        }
+    }
 
 }

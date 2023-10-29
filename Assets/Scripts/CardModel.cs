@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(MeshRenderer))]
 [RequireComponent(typeof(MeshCollider))]
@@ -35,6 +35,10 @@ public class CardModel : MonoBehaviour
     private float hoverScaleFactor = 1.1f;
     private float lastScaleFactor;
 
+
+    public static UnityEvent<CardModel> ev_CardClicked = new();
+
+
     private void Reset()
     {
         meshRenderer = GetComponent<MeshRenderer>();
@@ -53,17 +57,6 @@ public class CardModel : MonoBehaviour
     {
         _cardSO = so;
 
-        //// assume "sprite" is your Sprite object
-        //var croppedTexture = new Texture2D((int)_cardSO.sprite.rect.width, (int)_cardSO.sprite.rect.height);
-
-        //var pixels = _cardSO.sprite.texture.GetPixels((int)_cardSO.sprite.textureRect.x,
-        //                                        (int)_cardSO.sprite.textureRect.y,
-        //                                        (int)_cardSO.sprite.textureRect.width,
-        //                                        (int)_cardSO.sprite.textureRect.height);
-
-        //croppedTexture.SetPixels(pixels);
-        //croppedTexture.Apply();
-
         meshRenderer.material.mainTexture = _cardSO.sprite.texture;
     }
 
@@ -75,15 +68,6 @@ public class CardModel : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        /*
-        if (EventSystem.current.IsPointerOverGameObject())
-        {
-            return;
-        }//Should make ALL the UI elements block the exectution of this function (DOESN'T WORK)
-        */
-
-
-
         if (isInHand || isInToDiscard)
         {
             ShowCardOver();
@@ -104,35 +88,7 @@ public class CardModel : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (isInToDiscard)
-        {
-            UIManager.Instance.ReplaceCardInhand(this);
-            return;
-        }
-        if (isInHand)
-        {
-            switch (RulesManager.Instance.currentPhase)
-            {
-                case RulesManager.GamePhases.PlayPhase:
-                    GameManager.Instance.hands[owner].PlayCard(this);
-
-                    break;
-                case RulesManager.GamePhases.DiscardPhase:
-                    if(!isInToDiscard)
-                    GameManager.Instance.hands[owner].PutCardToDiscard(this);
-                    break;
-
-
-
-                default:
-                    break;
-
-            }
-            return;
-        }
-
-        
-
+        ev_CardClicked.Invoke(this);
     }
 
     public void ShowCardOver()
@@ -170,6 +126,13 @@ public class CardModel : MonoBehaviour
     {
         transform.position = position;
         lastPosY = position.y;
+    }
+
+    public void PlayCardEffect()
+    {
+        _cardSO.OnPlayEffect();
+
+        GameManager.Instance.currentPlauerHasPlayed = true;
     }
 
 }

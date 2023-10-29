@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class RulesManager : MonoBehaviour
 {
@@ -30,9 +31,9 @@ public class RulesManager : MonoBehaviour
     [SerializeField]
     public GamePhases currentPhase = GamePhases.PlayPhase;
 
-
-
     public Dictionary<GameManager.Players, int> toDiscard { get; private set; } = new Dictionary<GameManager.Players, int>();
+
+
 
     private void Awake()
     {
@@ -41,6 +42,8 @@ public class RulesManager : MonoBehaviour
 
     private void Start()
     {
+        CardModel.ev_CardClicked.AddListener((card) => OnCardClicked(card));
+
         CreateToDiscardDictionnary();
     }
 
@@ -53,6 +56,58 @@ public class RulesManager : MonoBehaviour
         if(!IsPendingDiscards() && currentPhase == GamePhases.DiscardPhase)
         {
             ExitDiscardPhase();
+        }
+    }
+
+    private void OnCardClicked(CardModel card)
+    {
+
+        if (card.isInHand)
+        {
+            switch(currentPhase)
+            {
+                case GamePhases.PlayPhase:
+                    PlayCardFromHand(card);
+                    break;
+                case GamePhases.DiscardPhase:
+                    PutCardInToDiscard(card);
+                    break;
+
+                default:
+                    return;
+            }
+        }
+
+    }
+
+    private void PutCardInToDiscard(CardModel card)
+    {
+        if (card.isInToDiscard)
+        {
+            UIManager.Instance.ReplaceCardInhand(card);
+        }
+        else
+        {
+            GameManager.Instance.hands[card.owner].PutCardToDiscard(card);
+        }
+    }
+
+    private void PlayCardFromHand(CardModel card)
+    {
+        if (GameManager.Instance.currentPlayer == card.owner)
+        {
+            PlayCard(card);
+
+            GameManager.Instance.hands[card.owner].RemoveCard(card);
+
+        }
+    }
+
+    private void PlayCard(CardModel card)
+    {
+        if (BoardManager.Instance.CanReceiveCard(card))
+        {
+            BoardManager.Instance.ReceiveCardPlayed(card);
         }
     }
 

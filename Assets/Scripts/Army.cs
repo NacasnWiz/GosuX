@@ -112,7 +112,9 @@ public class Army : MonoBehaviour
         cardToReceive.transform.SetParent(transform);
         cardToReceive.transform.localScale = BoardManager.Instance.cardScaleOnBoard;
         rows[cardToReceive._cardSO.rank].Add(cardToReceive);
-    }
+
+        cardToReceive.PlayCardEffect();//Bad architechture but
+    }   
 
 
 

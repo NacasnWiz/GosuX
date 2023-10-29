@@ -18,9 +18,12 @@ public class UIManager : MonoBehaviour
     private GameObject _opponentDeckPanel;
     [SerializeField]
     private GameObject _toDiscardPanel;
-    [SerializeField] private TMP_Text toDiscardText;
+    [SerializeField]
+    private TMP_Text toDiscardText;
     [SerializeField]
     private Button confirmDiscardButton;
+    [SerializeField] private Button seeOpponentButton;
+    [SerializeField] private Button returnToPlayerButton;
 
 
     [SerializeField]
@@ -213,7 +216,16 @@ public class UIManager : MonoBehaviour
 
     public void OnSeeOpponentButtonClicked()
     {
-        
+        seeOpponentButton.gameObject.SetActive(false);
+        GameManager.Instance.SeeOpponent();
+        returnToPlayerButton.gameObject.SetActive(true);
+    }
+
+    public void ReturnToPlayerButtonClicked()
+    {
+        returnToPlayerButton.gameObject.SetActive(false);
+        GameManager.Instance.ReturnToPlayer();
+        seeOpponentButton.gameObject.SetActive(true);
     }
 
     public void DisplayToDiscardPanel()
@@ -289,12 +301,11 @@ public class UIManager : MonoBehaviour
     }
 
     private void FlushCardsDiscarding()
-    {
-        GameManager.Instance.hands[GameManager.Instance.currentPlayer].RemoveCards(cardsDiscarding);
-        GameManager.Instance.discardPiles[GameManager.Instance.currentPlayer].AddCards(cardsDiscarding);
-        
+    {      
         foreach(CardModel card in cardsDiscarding)
         {
+            GameManager.Instance.hands[GameManager.Instance.currentPlayer].RemoveCard(card);
+            GameManager.Instance.discardPiles[GameManager.Instance.currentPlayer].AddCard(card);
             Destroy(card.gameObject);
         }
         cardsDiscarding.Clear();

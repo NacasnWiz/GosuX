@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class BoardManager : MonoBehaviour
+public class BoardManager : MonoBehaviour//Probably useless class, remove it sooner or later (armies will be in GameManager idk)
 {
     private static BoardManager _instance;
     public static BoardManager Instance
@@ -85,7 +85,10 @@ public class BoardManager : MonoBehaviour
                 return;
         }
     }
-
+    public void ReceiveCardPlayed(CardModel cardModel)
+    {
+        ReceiveCardPlayed(cardModel, cardModel.owner);
+    }
 
 
     public bool CanReceiveCard(CardModel cardToReceive, GameManager.Players owner)
@@ -101,6 +104,10 @@ public class BoardManager : MonoBehaviour
                 Debug.Log("default case CanReceiveCard from BoardManager : false.");
                 return false;
         }
+    }
+    public bool CanReceiveCard(CardModel card)
+    {
+        return CanReceiveCard(card, card.owner);
     }
 
 }
