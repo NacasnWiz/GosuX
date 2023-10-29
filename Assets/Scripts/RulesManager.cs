@@ -97,16 +97,17 @@ public class RulesManager : MonoBehaviour
         }
         else
         {
-            GameManager.Instance.hands[card.owner].PutCardToDiscard(card);
+            GameManager.Instance.players[card.owner]._hand.PutCardToDiscard(card);
+            //GameManager.Instance.hands[card.owner].PutCardToDiscard(card);
         }
     }
 
     private void PlayCardFromHand(CardModel card)
     {
-        if (GameManager.Instance.armies[card.owner].CanReceiveCard(card))
+        if (GameManager.Instance.players[card.owner]._army.CanReceiveCard(card))
         {
-            GameManager.Instance.armies[card.owner].ReceiveCardPlayed(card);
-            GameManager.Instance.hands[card.owner].RemoveCard(card);
+            GameManager.Instance.players[card.owner]._army.ReceiveCardPlayed(card);
+            GameManager.Instance.players[card.owner]._hand.RemoveCard(card);
 
 
             //card.PlayCardEffect();//NEXT FEATURE TO IMPLEMENT

@@ -4,33 +4,16 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    private static Player _instance;
-    public static Player Instance
-    {
-        get
-        {
-            if (_instance == null)
-            {
-                Debug.LogError("Game Manager is Null !!!");
-            }
+    [field: SerializeField]
+    public Deck _deck { get; private set; }
+    [field: SerializeField]
+    public DiscardPile _discardPile { get; private set; }
+    [field: SerializeField]
+    public Hand _hand { get; private set; }
+    [field: SerializeField]
+    public Army _army { get; private set; }
 
-            return _instance;
-        }
-    }
-
-    //public int firstObjectOnMouseCursorID { get; private set; }
-
-    private void Awake()
-    {
-        if (_instance == null)
-        {
-            _instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
+    //Camera ?
 
 
 

@@ -142,7 +142,7 @@ public class Army : MonoBehaviour
             case CardSO.Rank.Troupe:
                 if (rows[CardSO.Rank.Troupe].Count > 0 && !containsTroupeOfSameClan)
                 {
-                    return RulesManager.Instance.costOfNewClanTroupe < GameManager.Instance.hands[owner].GetHandSize();
+                    return RulesManager.Instance.costOfNewClanTroupe < GameManager.Instance.players[owner]._hand.GetHandSize();
                 }
                 else
                 {

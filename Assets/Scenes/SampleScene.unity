@@ -817,6 +817,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 276077435}
+  - component: {fileID: 276077436}
   m_Layer: 0
   m_Name: Opponent
   m_TagString: Untagged
@@ -844,6 +845,22 @@ Transform:
   - {fileID: 836309155}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!114 &276077436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 276077434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25fd3ee5f48cf054bb5a729d52c91d57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <_deck>k__BackingField: {fileID: 1028156330}
+  <_discardPile>k__BackingField: {fileID: 1074295999}
+  <_hand>k__BackingField: {fileID: 1955831328}
+  <_army>k__BackingField: {fileID: 1145301846}
 --- !u!1 &340003576
 GameObject:
   m_ObjectHideFlags: 0
@@ -1204,7 +1221,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <cardsInDeck>k__BackingField: []
-  cardsInDeckShuffled: []
+  <cardsInDeckShuffled>k__BackingField: []
   <owner>k__BackingField: 1
 --- !u!1 &482530558
 GameObject:
@@ -2131,6 +2148,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 743200172}
+  - component: {fileID: 743200173}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -2158,6 +2176,22 @@ Transform:
   - {fileID: 2086190403}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &743200173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 743200171}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25fd3ee5f48cf054bb5a729d52c91d57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <_deck>k__BackingField: {fileID: 444730072}
+  <_discardPile>k__BackingField: {fileID: 1896244356}
+  <_hand>k__BackingField: {fileID: 2076419724}
+  <_army>k__BackingField: {fileID: 1156391077}
 --- !u!1 &830845243
 GameObject:
   m_ObjectHideFlags: 0
@@ -2463,11 +2497,13 @@ MonoBehaviour:
   <_board>k__BackingField: {fileID: 1937636118}
   testSpawn: {fileID: 2135431422}
   dummy: {fileID: 2318195797342203747, guid: aaaa39ab730f6ea42945b661a772adae, type: 3}
+  _player: {fileID: 743200173}
   <playerDeck>k__BackingField: {fileID: 444730072}
   <playerDiscardPile>k__BackingField: {fileID: 1896244356}
   <playerHand>k__BackingField: {fileID: 2076419724}
   <playerArmy>k__BackingField: {fileID: 1156391077}
   <playerCamera>k__BackingField: {fileID: 2086190404}
+  _opponent: {fileID: 276077436}
   <opponentDeck>k__BackingField: {fileID: 1028156330}
   <opponentDiscardPile>k__BackingField: {fileID: 1074295999}
   <opponentHand>k__BackingField: {fileID: 1955831328}
@@ -2743,7 +2779,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <cardsInDeck>k__BackingField: []
-  cardsInDeckShuffled: []
+  <cardsInDeckShuffled>k__BackingField: []
   <owner>k__BackingField: -1
 --- !u!65 &1028156331
 BoxCollider:

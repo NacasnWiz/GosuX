@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Deck : MonoBehaviour
 {
-    [field : SerializeField]
-    public List<CardSO> cardsInDeck {get; private set;}
+    [field: SerializeField]
+    public List<CardSO> cardsInDeck { get; private set; }
 
-    [SerializeField]
-    private List<CardSO> cardsInDeckShuffled;
+    [field: SerializeField]
+    public List<CardSO> cardsInDeckShuffled { get; private set; }
 
     [field: SerializeField]
     public GameManager.Players owner { get; private set; }
@@ -31,7 +31,7 @@ public class Deck : MonoBehaviour
         foreach (CardSO card in cards)
         {
             cardsInDeck.Add(card);
-            if(card.rank == CardSO.Rank.Troupe)
+            if (card.rank == CardSO.Rank.Troupe)
             {
                 cardsInDeck.Add(card);
             }
@@ -40,7 +40,7 @@ public class Deck : MonoBehaviour
 
     public void AddCards(List<CardModel> cardModels)
     {
-        foreach(CardModel card in cardModels)
+        foreach (CardModel card in cardModels)
         {
             cardsInDeck.Add(card._cardSO);
         }

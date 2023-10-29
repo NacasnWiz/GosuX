@@ -29,13 +29,13 @@ public class Hand : MonoBehaviour
 
     private void DrawFromDeck()
     {
-        AddCard(GameManager.Instance.decks[owner].Draw());
+        AddCard(GameManager.Instance.players[owner]._deck.Draw());
     }
 
     [ContextMenu("Redraw")]
     public void ReDraw()
     {
-        GameManager.Instance.decks[owner].AddCards(cardsHeld);
+        GameManager.Instance.players[owner]._deck.AddCards(cardsHeld);
         
         foreach (CardModel card in cardsHeld)
         {

@@ -53,6 +53,9 @@ public class GameManager : MonoBehaviour
     public bool isOnPlayer { get; private set; } = false;
 
 
+    [SerializeField]
+    private Player _player;
+
     [field : SerializeField]
     public Deck playerDeck { get; private set; }
     [field: SerializeField]
@@ -66,6 +69,8 @@ public class GameManager : MonoBehaviour
     public CinemachineVirtualCamera playerCamera { get; private set; }
 
 
+    [SerializeField]
+    private Player _opponent;
     [field: SerializeField]
     public Deck opponentDeck { get; private set; }
     [field: SerializeField]
@@ -79,11 +84,13 @@ public class GameManager : MonoBehaviour
     public CinemachineVirtualCamera opponentCamera { get; private set; }
 
     
-    public Dictionary<Players, Deck> decks { get; private set; } = new();
-    public Dictionary<Players, DiscardPile> discardPiles { get; private set; } = new();
-    public Dictionary<Players, Hand> hands { get; private set; } = new();
-    public Dictionary<Players, Army> armies { get; private set; } = new();
-    public Dictionary<Players, CinemachineVirtualCamera> cameras { get; private set; } = new Dictionary<Players, CinemachineVirtualCamera>();
+    //public Dictionary<Players, Deck> decks { get; private set; } = new();
+    //public Dictionary<Players, DiscardPile> discardPiles { get; private set; } = new();
+    //public Dictionary<Players, Hand> hands { get; private set; } = new();
+    //public Dictionary<Players, Army> armies { get; private set; } = new();
+    //public Dictionary<Players, CinemachineVirtualCamera> cameras { get; private set; } = new();
+
+    public Dictionary<Players, Player> players { get; private set; } = new();
 
 
 
@@ -124,7 +131,8 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        CreatePlayersDictionaries();
+        //CreatePlayersDictionaries();
+        CreatePlayersDictionary();
         RulesManager.Instance.ev_CurrentPlayerHasPlayed.AddListener(() => { Debug.Log("current player has played."); currentPlayerHasPlayed = true; });
 
         FillDeck(playerDeck, playerClans);
@@ -144,23 +152,29 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void CreatePlayersDictionaries()
+    private void CreatePlayersDictionary()
     {
-        decks.Add(Players.Player, playerDeck);
-        decks.Add(Players.Opponent, opponentDeck);
-
-        discardPiles.Add(Players.Player, playerDiscardPile);
-        discardPiles.Add(Players.Opponent, opponentDiscardPile);
-
-        hands.Add(Players.Player, playerHand);
-        hands.Add(Players.Opponent, opponentHand);
-
-        armies.Add(Players.Player, playerArmy);
-        armies.Add(Players.Opponent, opponentArmy);
-
-        cameras.Add(Players.Player, playerCamera);
-        cameras.Add(Players.Opponent, opponentCamera);
+        players.Add(Players.Player, _player);
+        players.Add(Players.Opponent, _opponent);
     }
+
+    //private void CreatePlayersDictionaries()
+    //{
+    //    decks.Add(Players.Player, playerDeck);
+    //    decks.Add(Players.Opponent, opponentDeck);
+
+    //    discardPiles.Add(Players.Player, playerDiscardPile);
+    //    discardPiles.Add(Players.Opponent, opponentDiscardPile);
+
+    //    hands.Add(Players.Player, playerHand);
+    //    hands.Add(Players.Opponent, opponentHand);
+
+    //    armies.Add(Players.Player, playerArmy);
+    //    armies.Add(Players.Opponent, opponentArmy);
+
+    //    cameras.Add(Players.Player, playerCamera);
+    //    cameras.Add(Players.Opponent, opponentCamera);
+    //}
 
     private void FillDeck(Deck deck, CardSO.Clan[] clans)
     {

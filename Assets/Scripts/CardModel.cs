@@ -107,7 +107,7 @@ public class CardModel : MonoBehaviour
         isShownOver = false;
         if(isInHand)
         {
-            GameManager.Instance.hands[owner].AdjustCardsPos();//Not best
+            GameManager.Instance.players[owner]._hand.AdjustCardsPos();//Not best
         }
     }
 

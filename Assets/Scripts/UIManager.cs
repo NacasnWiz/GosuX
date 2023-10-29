@@ -311,8 +311,8 @@ public class UIManager : MonoBehaviour
     {      
         foreach(CardModel card in cardsDiscarding)
         {
-            GameManager.Instance.hands[GameManager.Instance.currentPlayer].RemoveCard(card);
-            GameManager.Instance.discardPiles[GameManager.Instance.currentPlayer].AddCard(card);
+            GameManager.Instance.players[GameManager.Instance.currentPlayer]._hand.RemoveCard(card);
+            GameManager.Instance.players[GameManager.Instance.currentPlayer]._discardPile.AddCard(card);
             Destroy(card.gameObject);
         }
         cardsDiscarding.Clear();
@@ -323,7 +323,7 @@ public class UIManager : MonoBehaviour
     {
         cardsDiscarding.Remove(card);
         card.isInToDiscard = false;
-        GameManager.Instance.hands[GameManager.Instance.currentPlayer].AdjustCardsPos();
+        GameManager.Instance.players[GameManager.Instance.currentPlayer]._hand.AdjustCardsPos();
         AdjustDiscardingDisplay();
     }
 
