@@ -51,6 +51,7 @@ public class UIManager : MonoBehaviour
 
 
     private GameObject currentPanel;
+    private GameManager.Players currentPlayerDisplayedCards = GameManager.Players.Player;
     private bool isDisplayingCards = false;
 
 
@@ -72,8 +73,8 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         RulesManager.Instance.ev_EnterDiscardPhase.AddListener(() => DisplayToDiscardPanel());
-        Deck.ev_DeckClicked.AddListener((deck) => DisplayDeckCards(deck.cardsInDeck, deck.owner.ID));
-        DiscardPile.ev_DiscardPileClicked.AddListener((discardPile) => DisplayDiscardPileCards(discardPile.cardsInDiscardPile, discardPile.owner.ID));
+        Deck.ev_DeckClicked.AddListener((deck) => DisplayDeckCards(deck));
+        DiscardPile.ev_DiscardPileClicked.AddListener((discardPile) => DisplayDiscardPileCards(discardPile));
     }
 
     private void Awake()
@@ -91,24 +92,24 @@ public class UIManager : MonoBehaviour
                 float maxScrollingOffset = -displayOffset.y / 2f - GetVerticalScreenPos(_displayedCards.Count - CARDS_PER_ROW);
                 scrollingOffset = Mathf.Clamp(scrollingOffset, 0f, maxScrollingOffset);
 
-                AdjustDisplayedCardsPos();
+                AdjustDisplayedCardsTransform();
             }
             
         }
     }
 
 
-    public void DisplayDeckCards(List<CardSO> cards, GameManager.Players possessor)
+    public void DisplayDeckCards(Deck deck)
     {
         scrollingOffset = 0f;
 
-        switch (possessor)
+        switch (deck.owner.ID)
         {
             case GameManager.Players.Player:
-                DisplayCards(_playerDeckPanel, cards);
+                DisplayCards(_playerDeckPanel, deck.cardsInDeckShuffled, deck.owner.ID);
                 break;
             case GameManager.Players.Opponent:
-                DisplayCards(_opponentDeckPanel, cards);
+                DisplayCards(_opponentDeckPanel, deck.cardsInDeckShuffled, deck.owner.ID);
                 break;
 
             default: break;
@@ -116,29 +117,31 @@ public class UIManager : MonoBehaviour
         
     }
 
-    public void DisplayDiscardPileCards(List<CardSO> cards, GameManager.Players possessor)
+    public void DisplayDiscardPileCards(DiscardPile discardPile)
     {
         scrollingOffset = 0f;
 
-        switch (possessor)
+        switch (discardPile.owner.ID)
         {
             case GameManager.Players.Player:
-                DisplayCards(_playerDiscardPilePanel, cards);
+                DisplayCards(_playerDiscardPilePanel, discardPile.cardsInDiscardPile, discardPile.owner.ID);
                 break;
             case GameManager.Players.Opponent:
-                DisplayCards(_opponentDiscardPilePanel, cards);
+                DisplayCards(_opponentDiscardPilePanel, discardPile.cardsInDiscardPile, discardPile.owner.ID);
                 break;
 
             default: break;
         }
     }
 
-    private void DisplayCards(GameObject displayPanel, List<CardSO> cards)
+    private void DisplayCards(GameObject displayPanel, List<CardSO> cards, GameManager.Players owner)
     {
         if(isDisplayingCards)
         {
             return;
         }
+
+        currentPlayerDisplayedCards = owner;
 
         OpenPanel(displayPanel);
         isDisplayingCards = true;
@@ -146,7 +149,7 @@ public class UIManager : MonoBehaviour
         {
             _displayedCards.Add(GameManager.Instance.CreateCardModel(cards[indexCard], transform));
         }
-        AdjustDisplayedCardsPos();
+        AdjustDisplayedCardsTransform();
     }
 
     private void OpenPanel(GameObject panel)
@@ -162,28 +165,35 @@ public class UIManager : MonoBehaviour
     }
 
     [ContextMenu("Readjust cards")]
-    private void AdjustDisplayedCardsPos()
+    private void AdjustDisplayedCardsTransform()
     {
         for (int indexCard = 0; indexCard < _displayedCards.Count; ++indexCard)
         {
-            AdjustDisplayedCardPos(indexCard);
+            AdjustDisplayedCardTransform(indexCard);
         }
     }
 
-    private void AdjustDisplayedCardPos(int index)
+    private void AdjustDisplayedCardTransform(int index)
     {
-        _displayedCards[index].transform.rotation = Quaternion.Euler(90f, 0f, 0f);
-        _displayedCards[index].transform.localPosition = GetScreenPos(currentPanel, index);
+        _displayedCards[index].transform.rotation = GetOnScreenRotation();
+        _displayedCards[index].transform.localPosition = GetScreenPos(index);
     }
 
-    private Vector3 GetScreenPos(GameObject panel, int index)
+    private Quaternion GetOnScreenRotation()
     {
-        int columnIndex = index % CARDS_PER_ROW;
-        int rowIndex = index / CARDS_PER_ROW;
+        Quaternion displayRotation = Quaternion.Euler(90f, 0f, 0f);
+        if (currentPlayerDisplayedCards == GameManager.Players.Opponent)
+            displayRotation *= Quaternion.Euler(0f, 0f, 180f);
+        return displayRotation;
+    }
 
+    private Vector3 GetScreenPos(int index)
+    {
         float horizontalPos = GetHorizontalScreenPos(index);
         float verticalPos = scrollingOffset + GetVerticalScreenPos(index);
 
+        horizontalPos *= (int)currentPlayerDisplayedCards;
+        verticalPos *= (int)currentPlayerDisplayedCards;
 
         Vector3 screenPos = Camera.main.transform.position + new Vector3(horizontalPos, -15f, verticalPos);
 
