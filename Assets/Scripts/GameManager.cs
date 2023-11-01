@@ -119,8 +119,8 @@ public class GameManager : MonoBehaviour
     {
         CreatePlayersDictionary();
         RulesManager.Instance.ev_CurrentPlayerHasPlayed.AddListener(() => { Debug.Log("current player has played."); currentPlayerHasPlayed = true; });
-        RulesManager.Instance.ev_RoundEnded.AddListener((winner) => Debug.Log("The round ended! " + winner.ID + " wins the round. (Sacrifice Phase is to be implemented)"));
-        RulesManager.Instance.ev_GameEnded.AddListener((winner) => Debug.Log("The game has ended. Winner is" + winner.ID));
+        RulesManager.Instance.ev_RoundEnded.AddListener((winner) => Debug.Log("The round ended! " + winner.ID + " wins the round."));
+        RulesManager.Instance.ev_GameEnded.AddListener((winner) => Debug.Log("The game has ended. Winner is " + winner.ID));
         RulesManager.Instance.ev_ExitSacrificePhase.AddListener(() => StartNewRound());
         RulesManager.Instance.ev_CardSacrificed.AddListener((card) => Destroy(card.gameObject));
 

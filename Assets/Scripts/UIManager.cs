@@ -31,6 +31,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Image playerSupremacyPoint;
     [SerializeField] private Image opponentSupremacyPoint;
 
+    [SerializeField] private GameObject BoardUI;
+
 
     [SerializeField]
     private int CARDS_PER_ROW = 6;
@@ -155,6 +157,8 @@ public class UIManager : MonoBehaviour
 
         currentPlayerDisplayedCards = owner;
 
+        BoardUI.SetActive(false);
+
         OpenPanel(displayPanel);
         isDisplayingCards = true;
         for (int indexCard = 0; indexCard < cards.Count; ++indexCard)
@@ -174,6 +178,7 @@ public class UIManager : MonoBehaviour
     {
         currentPanel.SetActive(false);
         currentPanel = null;
+        BoardUI.SetActive(true);
     }
 
     [ContextMenu("Readjust cards")]
