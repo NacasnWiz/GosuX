@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Narashima (Lion)
   nom: Narashima
   rank: 3
-  clan: 4
+  clan: 11
   texte: "Tous les joueurs d\xE9faussent la moiti\xE9 de leurs cartes en main, arrondi
     au sup\xE9rieur."
   passif: 

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class Army : MonoBehaviour
 {
@@ -20,12 +21,13 @@ public class Army : MonoBehaviour
 
     public Vector3[,] cardSpots { get; private set; }
 
-    private Dictionary<CardSO.Rank, List<CardModel>> rows = new();//We will rely on the fact that a CardModel card is always in its card.rank's row.
+    private Dictionary<CardSO.Ranks, List<CardModel>> rows = new();//We will rely on the fact that a CardModel card is always in its card.rank's row.
 
     [field: SerializeField]
     public Player owner { get; private set; }
 
     public int _battleScore => GetBattleScore();
+    public int _size => GetArmySize();
 
     [SerializeField]
     private GameObject dummy;
@@ -65,9 +67,9 @@ public class Army : MonoBehaviour
 
     private void SetArmyRows()
     {
-        rows.Add(CardSO.Rank.Troupe, new List<CardModel>());
-        rows.Add(CardSO.Rank.Héros, new List<CardModel>());
-        rows.Add(CardSO.Rank.Immortel, new List<CardModel>());
+        rows.Add(CardSO.Ranks.Troupe, new List<CardModel>());
+        rows.Add(CardSO.Ranks.Héros, new List<CardModel>());
+        rows.Add(CardSO.Ranks.Immortel, new List<CardModel>());
     }
 
     private void SetCardSpots()
@@ -109,7 +111,7 @@ public class Army : MonoBehaviour
             return;
         }
 
-        if (rows[CardSO.Rank.Troupe].Count > 0 && !ContainsClan(CardSO.Rank.Troupe, cardToReceive._cardSO.clan))
+        if (rows[CardSO.Ranks.Troupe].Count > 0 && !ContainsClan(CardSO.Ranks.Troupe, cardToReceive._cardSO.clan))
         {
             RulesManager.Instance.RequireDiscard(owner.ID, RulesManager.Instance.costOfNewClanTroupe);
         }
@@ -139,11 +141,11 @@ public class Army : MonoBehaviour
         }
 
 
-        bool containsTroupeOfSameClan = ContainsClan(CardSO.Rank.Troupe, cardToReceive._cardSO.clan);
+        bool containsTroupeOfSameClan = ContainsClan(CardSO.Ranks.Troupe, cardToReceive._cardSO.clan);
         switch (cardToReceive.rank)
         {
-            case CardSO.Rank.Troupe:
-                if (rows[CardSO.Rank.Troupe].Count > 0 && !containsTroupeOfSameClan)
+            case CardSO.Ranks.Troupe:
+                if (rows[CardSO.Ranks.Troupe].Count > 0 && !containsTroupeOfSameClan)
                 {
                     return RulesManager.Instance.costOfNewClanTroupe < owner._hand.GetHandSize();
                 }
@@ -152,25 +154,25 @@ public class Army : MonoBehaviour
                     return true;
                 }
 
-            case CardSO.Rank.Héros:
-                return containsTroupeOfSameClan && rows[CardSO.Rank.Troupe].Count > rows[CardSO.Rank.Héros].Count;
+            case CardSO.Ranks.Héros:
+                return containsTroupeOfSameClan && rows[CardSO.Ranks.Troupe].Count > rows[CardSO.Ranks.Héros].Count;
 
-            case CardSO.Rank.Immortel:
-                bool containsHérosOfSameClan = ContainsClan(CardSO.Rank.Héros, cardToReceive._cardSO.clan);
-                return containsTroupeOfSameClan && containsHérosOfSameClan && rows[CardSO.Rank.Troupe].Count >= rows[CardSO.Rank.Héros].Count && rows[CardSO.Rank.Héros].Count > rows[CardSO.Rank.Immortel].Count;
+            case CardSO.Ranks.Immortel:
+                bool containsHérosOfSameClan = ContainsClan(CardSO.Ranks.Héros, cardToReceive._cardSO.clan);
+                return containsTroupeOfSameClan && containsHérosOfSameClan && rows[CardSO.Ranks.Troupe].Count >= rows[CardSO.Ranks.Héros].Count && rows[CardSO.Ranks.Héros].Count > rows[CardSO.Ranks.Immortel].Count;
         }
 
         return true;
     }
 
-    private bool ContainsClan(CardSO.Rank rank, CardSO.Clan clan)
+    private bool ContainsClan(CardSO.Ranks rank, CardSO.Clans clan)
     {
         List<CardModel> row = rows[rank];
 
         return CountCardsOfClan(row, clan) > 0;
     }
 
-    private int CountCardsOfClan(List<CardModel> cardList, CardSO.Clan clan)
+    private int CountCardsOfClan(List<CardModel> cardList, CardSO.Clans clan)
     {
         int output = 0;
         foreach (CardModel card in cardList)
@@ -184,9 +186,9 @@ public class Army : MonoBehaviour
         return output;
     }
 
-    private bool ContainsClan(CardSO.Clan clan)
+    private bool ContainsClan(CardSO.Clans clan)
     {
-        return ContainsClan(CardSO.Rank.Troupe, clan) || ContainsClan(CardSO.Rank.Héros, clan) || ContainsClan(CardSO.Rank.Immortel, clan);
+        return ContainsClan(CardSO.Ranks.Troupe, clan) || ContainsClan(CardSO.Ranks.Héros, clan) || ContainsClan(CardSO.Ranks.Immortel, clan);
     }
 
     public int CalculateBattleScore()
@@ -210,13 +212,13 @@ public class Army : MonoBehaviour
 
         switch (cardSO.rank)
         {
-            case (CardSO.Rank.Troupe):
+            case (CardSO.Ranks.Troupe):
                 spot[0] = 0;
                 break;
-            case (CardSO.Rank.Héros):
+            case (CardSO.Ranks.Héros):
                 spot[0] = 1;
                 break;
-            case (CardSO.Rank.Immortel):
+            case (CardSO.Ranks.Immortel):
                 spot[0] = 2;
                 break;
 
@@ -243,7 +245,7 @@ public class Army : MonoBehaviour
 
     private bool ContainsCard(CardModel card)
     {
-        return rows[CardSO.Rank.Troupe].Contains(card) || rows[CardSO.Rank.Héros].Contains(card) || rows[CardSO.Rank.Immortel].Contains(card);
+        return rows[CardSO.Ranks.Troupe].Contains(card) || rows[CardSO.Ranks.Héros].Contains(card) || rows[CardSO.Ranks.Immortel].Contains(card);
     }
 
     public bool IsLIBRE(CardModel card)//Following the rules, a card is LIBRE if and only if it is at the end of its row, and at the top of its column.
@@ -265,17 +267,17 @@ public class Army : MonoBehaviour
         List<CardModel> column = new();
         int index = rows[card.rank].IndexOf(card);
 
-        if (rows[CardSO.Rank.Troupe].Count > index)//in case one day I'll want to allow above rows to be longer than below ones
+        if (rows[CardSO.Ranks.Troupe].Count > index)//in case one day I'll want to allow above rows to be longer than below ones
         {
-            column.Add(rows[CardSO.Rank.Troupe][index]);
+            column.Add(rows[CardSO.Ranks.Troupe][index]);
         }
-        if (rows[CardSO.Rank.Héros].Count > index)
+        if (rows[CardSO.Ranks.Héros].Count > index)
         {
-            column.Add(rows[CardSO.Rank.Héros][index]);
+            column.Add(rows[CardSO.Ranks.Héros][index]);
         }
-        if (rows[CardSO.Rank.Immortel].Count > index)//security checks
+        if (rows[CardSO.Ranks.Immortel].Count > index)//security checks
         {
-            column.Add(rows[CardSO.Rank.Immortel][index]);
+            column.Add(rows[CardSO.Ranks.Immortel][index]);
         }
 
         return column;
@@ -293,6 +295,17 @@ public class Army : MonoBehaviour
             }
         }
         return score;
+    }
+
+    public int GetArmySize()
+    {
+        int size = 0;
+
+        foreach (List<CardModel> row in rows.Values)
+        {
+            size += row.Count;
+        }
+        return size;
     }
 
 }

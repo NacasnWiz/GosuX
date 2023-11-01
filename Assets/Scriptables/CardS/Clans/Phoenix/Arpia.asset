@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Arpia
   nom: Arpia
   rank: 2
-  clan: 5
+  clan: 13
   texte: "Piochez 1 carte, puis si *Timer* est en jeu face visible, jouez un tour
     additionnel apr\xE8s celui-ci."
   passif: 

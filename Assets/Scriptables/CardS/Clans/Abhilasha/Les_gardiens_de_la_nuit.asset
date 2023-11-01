@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Les gardiens de la nuit
   nom: Les_gardiens_de_la_nuit
   rank: 2
-  clan: 0
+  clan: 2
   texte: 
   passif: "Lorsque cette carte est captur\xE9e, votre adversaire d\xE9fausse de sa
     main une carte de son choix."

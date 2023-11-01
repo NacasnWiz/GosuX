@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Xi'an
   nom: Xi_an
   rank: 5
-  clan: 7
+  clan: 19
   texte: Copiez l'effet d'une carte en jeu.
   passif: "Vos cartes de niveau III sont consid\xE9r\xE9es comme \xE9tant des 3 clans
     de votre deck dans toutes les zones de jeu."

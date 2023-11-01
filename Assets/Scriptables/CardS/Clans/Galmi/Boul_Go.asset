@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Boul Go
   nom: Boul_Go
   rank: 2
-  clan: 1
+  clan: 3
   texte: 
   passif: "Lorsdque vous d\xE9pensez 2 *Jeton d'Activation* pour piocher 3 cartes,
     jouez un tour additionnel apr\xE8s celui-ci."

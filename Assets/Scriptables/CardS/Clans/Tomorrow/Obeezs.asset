@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Obeezs
   nom: Obeezs
   rank: 2
-  clan: 6
+  clan: 17
   texte: "Piochez 2 cartes, puis d\xE9faussez 2 cartes."
   passif: 
   "forceDeVolont\xE9": 0

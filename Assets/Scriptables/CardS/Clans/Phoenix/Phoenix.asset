@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Phoenix
   nom: Phoenix
   rank: 5
-  clan: 5
+  clan: 13
   texte: "Jouez un tour additionnel apr\xE8s celui-ci."
   passif: "Au d\xE9but de la Grande Bataille, votre valeur militaire est augment\xE9e
     de 1 pour chaque carte dans votre main."

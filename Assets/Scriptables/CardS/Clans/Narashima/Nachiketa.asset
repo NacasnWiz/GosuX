@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Nachiketa
   nom: Nachiketa
   rank: 3
-  clan: 4
+  clan: 11
   texte: "Tous les joueurs d\xE9faussent 2 cartes."
   passif: 
   "forceDeVolont\xE9": 0

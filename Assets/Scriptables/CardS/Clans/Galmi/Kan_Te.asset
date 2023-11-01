@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Kan Te
   nom: Kan_Te
   rank: 3
-  clan: 1
+  clan: 3
   texte: "Lib\xE9rez toutes vos cartes."
   passif: 
   "forceDeVolont\xE9": 0

@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Hemro, le chasseur de primes
   nom: Hemro_le_chasseur_de_primes
   rank: 3
-  clan: 2
+  clan: 5
   texte: 
   passif: "Lorsque vous capturez ou d\xE9truisez une carte *Prime* adverse, piochez
     une carte suppl\xE9mentaire."

@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Solok
   nom: Solok
   rank: 3
-  clan: 0
+  clan: 2
   texte: "Capturez ou lib\xE9rez une carte de niveau I ou II."
   passif: 
   "forceDeVolont\xE9": 0

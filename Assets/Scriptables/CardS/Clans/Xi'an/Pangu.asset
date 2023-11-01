@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Pangu
   nom: Pangu
   rank: 3
-  clan: 7
+  clan: 19
   texte: "Capturez, d\xE9truisez ou lib\xE9rez une carte de niveau I ou II."
   passif: 
   "forceDeVolont\xE9": 0

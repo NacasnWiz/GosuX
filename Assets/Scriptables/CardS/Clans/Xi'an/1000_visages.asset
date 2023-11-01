@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: 1000 visages
   nom: 1000 visages
   rank: 2
-  clan: 7
+  clan: 19
   texte: Piochez 1 carte pour chaque clan dans cette colonne.
   passif: 
   "forceDeVolont\xE9": 0

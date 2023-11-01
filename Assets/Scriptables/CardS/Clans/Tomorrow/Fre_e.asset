@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Fre'e
   nom: Fre_e
   rank: 3
-  clan: 6
+  clan: 17
   texte: "Lib\xE9rez la carte de votre choix, puis copiez son effet."
   passif: 
   "forceDeVolont\xE9": 0

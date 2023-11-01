@@ -17,5 +17,7 @@ TODO: (TRISTAN)
 
 
 Q -
-. Should I ùerge RulesManager and GameManager in a unique class using partial ?
+. Should I merge RulesManager and GameManager in a unique class using partial ?
 ANSWER IS **NO** because it becomes a GodObject.
+
+. Should I hold a list of all cards in an Army, instead of tediously keeping them inside rows? (for cardCount, or other misc)

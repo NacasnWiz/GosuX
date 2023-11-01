@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Hempo
   nom: Hempo
   rank: 3
-  clan: 2
+  clan: 5
   texte: "Vous pouvez inverser 2 cartes de m\xEAme niveau dans l'arm\xE9e de votre
     choix, puis d\xE9truisez une carte LIBRE de niveau I ou II. Vous pouvez choisir
     une carte de niveau III si vous avez un *Jeton Supr\xE9matie*."

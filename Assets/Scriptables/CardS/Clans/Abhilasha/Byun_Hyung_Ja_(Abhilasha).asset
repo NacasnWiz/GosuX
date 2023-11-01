@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Byun Hyung Ja
   nom: Byun_Hyung_Ja
   rank: 5
-  clan: 0
+  clan: 2
   texte: 
   passif: "\xC0 la fin de votre tour, si votre adversaire a 3 cartes captur\xE9es
     ou plus, gagnez *Jeton d'Activation* puis lib\xE9rez toutes les cartes de votre

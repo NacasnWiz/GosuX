@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Nikhilesh
   nom: Nikhilesh
   rank: 2
-  clan: 4
+  clan: 11
   texte: "Piochez 1 carte pour chaque clan diff\xE9rent dans votre d\xE9fausse."
   passif: 
   "forceDeVolont\xE9": 0

@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: EZ
   nom: EZ
   rank: 3
-  clan: 6
+  clan: 17
   texte: "Vous pouvez retirer de la partie une carte de votre d\xE9fausse. Si vous
     le faites, piochez 1 carte."
   passif: 

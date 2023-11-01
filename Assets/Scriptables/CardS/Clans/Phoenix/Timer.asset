@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Timer
   nom: Timer
   rank: 2
-  clan: 5
+  clan: 13
   texte: "Jouez un tour additionnel apr\xE8s celui-ci, puis si *Arpia* est en jeu,
     piochez 1 carte."
   passif: 

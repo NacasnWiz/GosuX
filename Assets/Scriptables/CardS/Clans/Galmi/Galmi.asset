@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Galmi
   nom: Galmi
   rank: 5
-  clan: 1
+  clan: 3
   texte: "Placez une carte LIBRE d'un joueur sur le sommet de on deck, puis vous
     pouvez Passer imm\xE9diatement."
   passif: Lorsque vous Passez, votre adversaire ne peut jouer que 2 tours au lieu

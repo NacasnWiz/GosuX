@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Esprits de Smook
   nom: Esprits_de_Smook
   rank: 2
-  clan: 2
+  clan: 5
   texte: "Ajoutez \xE0 votre main une carte *V\xE9t\xE9ran* depuis votre d\xE9fausse."
   passif: 
   "forceDeVolont\xE9": 0

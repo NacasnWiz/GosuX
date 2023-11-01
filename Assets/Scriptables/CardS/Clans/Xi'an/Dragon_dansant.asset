@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Dragon dansant
   nom: Dragon_dansant
   rank: 2
-  clan: 7
+  clan: 19
   texte: Copiez l'effet d'une carte de niveau I en jeu.
   passif: 
   "forceDeVolont\xE9": 0

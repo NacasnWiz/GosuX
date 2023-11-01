@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: "Les ap\xF4tres de la nuit"
   nom: "Les_ap\xF4tres_de_la_nuit"
   rank: 2
-  clan: 0
+  clan: 2
   texte: "Capturez ou lib\xE9rez une carte de niveau I."
   passif: 
   "forceDeVolont\xE9": 0

@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Abhilasha
   nom: Abhilasha
   rank: 5
-  clan: 0
+  clan: 2
   texte: "Copiez l'effet d'une carte de n'importe quelle d\xE9fausse, puis retirez
     la carte copi\xE9e de la partie."
   passif: "Vos cartes avec un co\xFBt de Rel\xE8ve ont *Rel\xE8ve secr\xE8te*"

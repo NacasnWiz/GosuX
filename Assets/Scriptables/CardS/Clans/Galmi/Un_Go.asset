@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Un'Go
   nom: Un_Go
   rank: 2
-  clan: 1
+  clan: 3
   texte: "Choisissez une carte LIBRE de niveau I ou II : son controlleur la place
     sur le sommet de son deck. Vous pouvez choisir une carte LIBRE de niveau III
     \xE0 la place si vous avez un *Jeton Supr\xE9matie*."

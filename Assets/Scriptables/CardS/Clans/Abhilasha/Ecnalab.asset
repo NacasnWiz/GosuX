@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Ecnalab
   nom: Ecnalab
   rank: 3
-  clan: 0
+  clan: 2
   texte: "Tous les joueurs piochent ou d\xE9faussent jusqu'\xE0 avoir 3 cartes en
     main."
   passif: 

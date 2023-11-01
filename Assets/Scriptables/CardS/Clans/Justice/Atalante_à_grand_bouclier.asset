@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: "Atalante \xE0 grand bouclier"
   nom: "Atalante_\xE0_grand_bouclier"
   rank: 2
-  clan: 3
+  clan: 7
   texte: 
   passif: "vous pouvez d\xE9fausser cette carte de votre main pour annuler l'activation
     d'une carte adverse avec un *Jeton d'Activation*"

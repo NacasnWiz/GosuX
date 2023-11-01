@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Kno'Bo
   nom: Kno_Bo
   rank: 2
-  clan: 1
+  clan: 3
   texte: "Vous pouvez inverser 2 cartes de m\xEAme niveau dans votre arm\xE9e, puis
     piochez 1 carte pour chaque carte du clan *Galmi* dans cette colonne."
   passif: 

@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Bun To
   nom: Bun_To
   rank: 2
-  clan: 1
+  clan: 3
   texte: "Choisissez un niveau et r\xE9v\xE9lez les 4 prochaines cartes de votre
     deck : ajoutez \xE0 votre main toutes les cartes du niveau choisi et placez le
     reste dans votre d\xE9fausse."

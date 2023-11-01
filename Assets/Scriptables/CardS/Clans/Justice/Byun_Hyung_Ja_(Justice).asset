@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Byun Hyung Ja
   nom: Byun_Hyung_Ja
   rank: 5
-  clan: 3
+  clan: 7
   texte: 
   passif: Si vous perdez une Grande Bataille et que votre adversaire ne gagne pas
     la partie, gagnez *Jeton d'Activaton*.

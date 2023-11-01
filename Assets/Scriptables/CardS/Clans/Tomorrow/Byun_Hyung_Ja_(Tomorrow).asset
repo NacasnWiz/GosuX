@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Byun Hyung Ja
   nom: Byun_Hyung_Ja
   rank: 5
-  clan: 6
+  clan: 17
   texte: 
   passif: "\xC0 la fin de votre tour, si la carte *Ne'ye* est retir\xE9e de la partie,
     m\xE9langez-la dans votre deck pour gagner *Jeton d'Activation*."

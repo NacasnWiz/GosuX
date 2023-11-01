@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: She Rift
   nom: She_Rift
   rank: 3
-  clan: 1
+  clan: 3
   texte: "Placez ou d\xE9placez le jeton *Prime* sur une carte."
   passif: 
   "forceDeVolont\xE9": 0

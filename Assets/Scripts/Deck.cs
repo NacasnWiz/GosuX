@@ -40,7 +40,7 @@ public class Deck : MonoBehaviour
         foreach (CardSO card in cards)
         {
             AddCard(card);
-            if (card.rank == CardSO.Rank.Troupe)
+            if (card.rank == CardSO.Ranks.Troupe)
             {
                 AddCard(card);
             }

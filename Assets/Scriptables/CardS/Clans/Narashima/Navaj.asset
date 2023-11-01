@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Navaj
   nom: Navaj
   rank: 2
-  clan: 4
+  clan: 11
   texte: "Choisissez jusqu'\xE0 *X* cartes *Merveilleux et/ou *Force de volont\xE9*
     de votre d\xE9fausse et ajoutez-les \xE0 votre main."
   passif: 

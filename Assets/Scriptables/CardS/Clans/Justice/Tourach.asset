@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Tourach
   nom: Tourach
   rank: 3
-  clan: 3
+  clan: 7
   texte: "Votre adversaire d\xE9fausse ses cartes en main jusqu'\xE0 en avoir autant
     que vous."
   passif: 

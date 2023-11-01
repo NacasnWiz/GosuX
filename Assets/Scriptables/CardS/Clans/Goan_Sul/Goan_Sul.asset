@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Goan Sul
   nom: Goan_Sul
   rank: 5
-  clan: 2
+  clan: 5
   texte: "D\xE9truisez toutes les cartes LIBRES d'un m\xEAme clan."
   passif: "Lorsque vous remportez une Grande Bataille avec un \xE9cart de valeur
     militaire de 10 points ou plus, gagnez imm\xE9diatement la partie.\nSinon, sacrifiez

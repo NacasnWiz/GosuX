@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Quae
   nom: Quae
   rank: 3
-  clan: 3
+  clan: 7
   texte: "Le joueur avec le plus de cartes en jeu sacrifie ses cartes LIBRE jusqu'\xE0
     en avoir autant que son adversaire."
   passif: 

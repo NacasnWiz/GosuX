@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Narashima
   nom: Narashima
   rank: 5
-  clan: 4
+  clan: 11
   texte: "Placez les 10 premi\xE8res cartes de votre deck dans votre d\xE9fausse,
     puis ajoutez une carte de votre d\xE9fausse \xE0 votre main."
   passif: "La taille de main des joueurs \xE0 la fin de leur tour est de 5 au lieu

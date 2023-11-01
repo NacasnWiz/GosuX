@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Muraena
   nom: Muraena
   rank: 2
-  clan: 5
+  clan: 13
   texte: Piochez *X* cartes.
   passif: 
   "forceDeVolont\xE9": 0

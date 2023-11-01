@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Orgah
   nom: Orgah
   rank: 3
-  clan: 2
+  clan: 5
   texte: "Chaque joueur choisit un clan pr\xE9sent dans sa d\xE9fausse et retire
     de la partie toutes les cartes correspondantes qui s'y trouvent."
   passif: 

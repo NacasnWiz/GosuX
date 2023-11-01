@@ -33,14 +33,14 @@ public class GameManager : MonoBehaviour
     public CardSO[] ALL_CARDS_LIST {get; private set;}
 
     [SerializeField]
-    private Dictionary<CardSO.Clan, List<CardSO>> ALL_CLANS_CARDS = new();
+    private Dictionary<CardSO.Clans, List<CardSO>> ALL_CLANS_CARDS = new();
 
     //[SerializeField]
     //private CardSO.Clan[] playerClans = new CardSO.Clan[3];
     //[SerializeField]
     //private CardSO.Clan[] opponentClans = new CardSO.Clan[3];
     [SerializeField]
-    private CardSO.Clan[] unplayedClans = new CardSO.Clan[2];
+    private CardSO.Clans[] unplayedClans = new CardSO.Clans[2];
 
     public int nb_cardsDrawnStart = 7;
     public int nb_maxTurnsAfterPass = 3;
@@ -103,7 +103,7 @@ public class GameManager : MonoBehaviour
     private void SetClansCardsLists()
     {
         int clanCount = 0;
-        foreach (CardSO.Clan clan in Enum.GetValues(typeof(CardSO.Clan)))
+        foreach (CardSO.Clans clan in Enum.GetValues(typeof(CardSO.Clans)))
         {
             ALL_CLANS_CARDS.Add(clan, new List<CardSO>());
             for (int i = 0; i < 11; ++i)
@@ -147,9 +147,9 @@ public class GameManager : MonoBehaviour
 
     private void FillDeck(Player player)
     {
-        List<CardSO.Clan> clans = player.clansList;
+        List<CardSO.Clans> clans = player.clansList;
 
-        foreach (CardSO.Clan clan in clans)
+        foreach (CardSO.Clans clan in clans)
         {
             player.AddCardsToDeck(ALL_CLANS_CARDS[clan]);
         }

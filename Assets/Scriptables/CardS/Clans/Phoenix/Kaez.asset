@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Kaez
   nom: Kaez
   rank: 3
-  clan: 5
+  clan: 13
   texte: "Ajoutez \xE0 votre main toutes les cartes nomm\xE9es *Phoenix* retir\xE9es
     de la partie et depuis votre d\xE9fausse."
   passif: 

@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: "Unit\xE9s de bombardement"
   nom: "Unit\xE9s_de_bombardement"
   rank: 2
-  clan: 2
+  clan: 5
   texte: "Chaque joueur sacrifie une de ses cartes LIBRE. Vous pouvez d\xE9clencher
     cet effet une seconde fois si vous avez un *Jeton Supr\xE9matie*."
   passif: 

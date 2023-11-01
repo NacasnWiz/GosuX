@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Wiindz
   nom: Wiindz
   rank: 2
-  clan: 6
+  clan: 17
   texte: "Lib\xE9rez une carte dans cette ligne ou dans cette colonne."
   passif: 
   "forceDeVolont\xE9": 0

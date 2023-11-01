@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Elle
   nom: Elle
   rank: 3
-  clan: 3
+  clan: 7
   texte: "Cherchez dans votre deck la carte de votre choix et ajoutez-la \xE0 votre
     main, puis m\xE9langez votre deck."
   passif: 

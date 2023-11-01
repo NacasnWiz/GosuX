@@ -44,6 +44,8 @@ public class RulesManager : MonoBehaviour
 
 
     public UnityEvent ev_EnterDiscardPhase = new();
+    public UnityEvent ev_EnterSacrificePhase = new();
+    public UnityEvent ev_ExitSacrificePhase = new();
     public UnityEvent ev_CurrentPlayerHasPlayed = new();
     public UnityEvent<Player> ev_RoundEnded = new();
     public UnityEvent<Player> ev_GameEnded = new();
@@ -83,6 +85,11 @@ public class RulesManager : MonoBehaviour
         return toDiscard[GameManager.Players.Player] > 0 || toDiscard[GameManager.Players.Opponent] > 0;
     }
 
+    private bool IsPendingSacrifices()
+    {
+        return toSacrifice[GameManager.Players.Player] > 0 || toSacrifice[GameManager.Players.Opponent] > 0;
+    }
+
     private void OnCardClicked(CardModel card)
     {
         if (card.isInHand)
@@ -111,11 +118,36 @@ public class RulesManager : MonoBehaviour
             switch (currentPhase)
             {
                 case GamePhases.SacrificePhase:
-                    card.owner._army.RemoveCard(card);
-                    card.owner._discardPile.AddCard(card);
-                    Destroy(card.gameObject);
+                    if (card.owner._army.IsLIBRE(card))
+                    {
+                        Sacrifice(card);
+                    }
+                    else
+                    {
+                        Debug.Log("You can't sacrifice a card that's not LIBRE.");
+                    }
                     return;
             }
+        }
+    }
+
+    private void Sacrifice(CardModel cardToSacrifice)
+    {
+        if(toSacrifice[cardToSacrifice.owner.ID] <= 0)
+        {
+            Debug.Log(cardToSacrifice.owner.ID + "Doesn't need to sacrifice any more card.");
+            return;
+        }
+        cardToSacrifice.owner._army.RemoveCard(cardToSacrifice);
+        cardToSacrifice.owner._discardPile.AddCard(cardToSacrifice);
+        Destroy(cardToSacrifice.gameObject);
+        --toSacrifice[cardToSacrifice.owner.ID];
+
+        UIManager.Instance.AdjustDummyToSacrificeText();
+
+        if (!IsPendingSacrifices())
+        {
+            ExitSacrificePhase();
         }
     }
 
@@ -152,11 +184,32 @@ public class RulesManager : MonoBehaviour
         }
     }
 
+    private void EnterDiscardPhase()
+    {
+        currentPhase = GamePhases.DiscardPhase;
+        ev_EnterDiscardPhase.Invoke();
+    }
+
+    private void EnterSacrificePhase()
+    {
+        Debug.Log("Sacrifice Phase just begun.");
+        ev_EnterSacrificePhase.Invoke();
+        currentPhase = GamePhases.SacrificePhase;
+    }
+
     private void ExitDiscardPhase()
     {
         currentPhase = GamePhases.PlayPhase;
     }
 
+    private void ExitSacrificePhase()
+    {
+        //Start new round, probably
+        ev_ExitSacrificePhase.Invoke();
+        Debug.Log("Sacrifice Phase is over.");
+
+        currentPhase = GamePhases.PlayPhase;
+    }
 
 
     public void RequireDiscard(GameManager.Players who, int cost)
@@ -175,18 +228,6 @@ public class RulesManager : MonoBehaviour
         }
     }
 
-    private void EnterDiscardPhase()
-    {
-        currentPhase = GamePhases.DiscardPhase;
-        ev_EnterDiscardPhase.Invoke();
-    }
-
-    private void EnterSacrificePhase()
-    {
-        currentPhase = GamePhases.SacrificePhase;
-    }
-
-
     public void EndRound()
     {
         Debug.Log("The round has ended.");
@@ -202,7 +243,20 @@ public class RulesManager : MonoBehaviour
 
         ev_RoundEnded.Invoke(lastRoundWinner);
 
+        toSacrifice[GameManager.Players.Player] += CalculateToSacrifice(GameManager.Instance.players[GameManager.Players.Player]);
+        toSacrifice[GameManager.Players.Opponent] += CalculateToSacrifice(GameManager.Instance.players[GameManager.Players.Opponent]);
+
         EnterSacrificePhase();
+    }
+
+    private int CalculateToSacrifice(Player player)
+    {
+        int output = 0;
+        int playerArmySize = player._army._size;
+
+        output = playerArmySize / 2 + playerArmySize % 2;
+
+        return output;
     }
 
     private void CrownRoundWinner()

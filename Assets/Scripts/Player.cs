@@ -7,7 +7,7 @@ public class Player : MonoBehaviour
     [field: SerializeField]
     public GameManager.Players ID { get; private set; }
 
-    public List<CardSO.Clan> clansList = new();
+    public List<CardSO.Clans> clansList = new();
 
     [field: SerializeField]
     public Deck _deck { get; private set; }

@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Nitish
   nom: Nitish
   rank: 2
-  clan: 4
+  clan: 11
   texte: "Vous pouvez d\xE9fausser une carte *Prime* de votre main pour capturer,
     d\xE9truire ou lib\xE9rer une carte de niveau inf\xE9rieur ou \xE9gal au niveau
     de la carte *Prime* d\xE9fauss\xE9e."

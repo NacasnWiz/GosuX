@@ -21,6 +21,8 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private TMP_Text toDiscardText;
     [SerializeField]
+    private TMP_Text dummyToSacrificeText;
+    [SerializeField]
     private Button confirmDiscardButton;
     [SerializeField] private Button seeOpponentButton;
     [SerializeField] private Button returnToPlayerButton;
@@ -77,6 +79,8 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         RulesManager.Instance.ev_EnterDiscardPhase.AddListener(() => DisplayToDiscardPanel());
+        RulesManager.Instance.ev_EnterSacrificePhase.AddListener(() => {AdjustDummyToSacrificeText(); dummyToSacrificeText.gameObject.SetActive(true); });
+        RulesManager.Instance.ev_ExitSacrificePhase.AddListener(() => dummyToSacrificeText.gameObject.SetActive(false));
         Deck.ev_DeckClicked.AddListener((deck) => DisplayDeckCards(deck));
         DiscardPile.ev_DiscardPileClicked.AddListener((discardPile) => DisplayDiscardPileCards(discardPile));
         GameManager.Instance.ev_TurnEnded.AddListener((player) => UpdateArmyScoreText(player));
@@ -376,6 +380,14 @@ public class UIManager : MonoBehaviour
             opponentSupremacyPoint.gameObject.SetActive(true);
             playerSupremacyPoint.gameObject.SetActive(true);
         }
+    }
+
+    public void AdjustDummyToSacrificeText()
+    {
+        int playerToSacrifice = RulesManager.Instance.toSacrifice[GameManager.Players.Player];
+        int opponentToSacrifice = RulesManager.Instance.toSacrifice[GameManager.Players.Opponent];
+
+        dummyToSacrificeText.text = "ToSacrifice:\nPlayer - " + playerToSacrifice + "\nOpponent - " + opponentToSacrifice;
     }
 
 }

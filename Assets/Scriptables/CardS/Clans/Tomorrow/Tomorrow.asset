@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Tomorrow
   nom: Tomorrow
   rank: 5
-  clan: 6
+  clan: 17
   texte: Piochez 1 carte.
   passif: Vos cartes de niveau III ont *Echo*.
   "forceDeVolont\xE9": 0

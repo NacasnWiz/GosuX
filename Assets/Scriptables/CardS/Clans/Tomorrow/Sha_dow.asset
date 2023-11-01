@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Sha'dow
   nom: Sha_dow
   rank: 3
-  clan: 6
+  clan: 17
   texte: 
   passif: "Les cartes adjacentes \xE0 *Sha'dow* ont *Echo*."
   "forceDeVolont\xE9": 0

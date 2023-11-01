@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Alpha
   nom: Alpha
   rank: 3
-  clan: 2
+  clan: 5
   texte: "Capturez une carte de niveau I ou II. Vous pouvez choisir une carte de
     niveau II si vous avez *Jeton Supr\xE9matie*."
   passif: 

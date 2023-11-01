@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Sati
   nom: Sati
   rank: 3
-  clan: 3
+  clan: 7
   texte: "Piochez des cartes jusqu'\xE0 en avoir autant que votre adversaire."
   passif: 
   "forceDeVolont\xE9": 0

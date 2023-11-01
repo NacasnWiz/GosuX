@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Phoenix (Eliana)
   nom: Phoenix
   rank: 3
-  clan: 5
+  clan: 13
   texte: 
   passif: "Lorsque *Phoenix (Eliana* est en jeu face visible, elle est \xE9galement
     consid\xE9r\xE9e comme une carte *Arpia* et *Timer*."

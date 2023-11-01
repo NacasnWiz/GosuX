@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Ne'ye
   nom: Ne_ye
   rank: 3
-  clan: 6
+  clan: 17
   texte: 
   passif: "Lorsqu'un joueur retire *Ne'ye* de la partie depuis votre d\xE9fausse,
     il pioche 1 carte."

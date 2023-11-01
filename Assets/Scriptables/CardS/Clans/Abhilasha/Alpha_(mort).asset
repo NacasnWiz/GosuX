@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Alpha (mort)
   nom: Alpha
   rank: 3
-  clan: 0
+  clan: 2
   texte: "Reprenez jusqu'\xE0 2 de vos *Jeton d'Activation*, puis capturez *Alpha_(mort)*"
   passif: 
   "forceDeVolont\xE9": 0

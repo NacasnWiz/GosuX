@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Justice
   nom: Justice
   rank: 5
-  clan: 3
+  clan: 7
   texte: "Retournez une de vos tuiles Immortel. Si vous retournez ainsi votre 3e
     tuile Immortel et que vous avez un *Jeton Supr\xE9matie*, vous gagnez instantan\xE9ment
     la partie."

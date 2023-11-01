@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Ashes
   nom: Ashes
   rank: 3
-  clan: 0
+  clan: 2
   texte: "Choisissez un clan et un niveau : ajoutez \xE0 votre main jusqu'\xE0 *X*
     cartes correspondantes depuis votre d\xE9fausse."
   passif: 

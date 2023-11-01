@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Le Cercle Rouge
   nom: Le_Cercle_Rouge
   rank: 2
-  clan: 0
+  clan: 2
   texte: 
   passif: "vous pouvez d\xE9fausser cette carte de votre main pour annuler la capture
     ou la destruction d'une de vos cartes."

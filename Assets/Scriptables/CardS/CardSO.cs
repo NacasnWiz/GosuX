@@ -7,14 +7,14 @@ public class CardSO : ScriptableObject
 {
     public int ID;
 
-    public enum Rank
+    public enum Ranks
     {
         Troupe = 2,
         Héros = 3,
         Immortel = 5
     }
 
-    public enum Clan//careful not to have a clan equal zero
+    public enum Clans//careful not to have a clan equal zero
     {
         Abhilasha = 2,
         Galmi = 3,
@@ -26,7 +26,7 @@ public class CardSO : ScriptableObject
         Xi_an = 19,
     }
 
-    public enum KeyWord
+    public enum KeyWords
     {
         Prime,
         Veteran,
@@ -46,15 +46,15 @@ public class CardSO : ScriptableObject
 
     public string cardName;
     public string nom;
-    public Rank rank;
-    public Clan clan;
+    public Ranks rank;
+    public Clans clan;
 
     [TextArea]
     public string texte;
     [TextArea]
     public string passif;
     public bool forceDeVolonté;
-    public KeyWord[] keyWords;
+    public KeyWords[] keyWords;
     public int relèveCost;
     public int maxActivations;
 

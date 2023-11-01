@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Niranjan
   nom: Niranjan
   rank: 3
-  clan: 4
+  clan: 11
   texte: Votre adversaire sacrifie une de ses cates LIBRE.
   passif: 
   "forceDeVolont\xE9": 0

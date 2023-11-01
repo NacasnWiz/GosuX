@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Valeen
   nom: Valeen
   rank: 3
-  clan: 7
+  clan: 19
   texte: Copiez l'effet d'une carte de niveau I ou II en jeu.
   passif: 
   "forceDeVolont\xE9": 0

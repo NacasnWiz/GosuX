@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Volantis
   nom: Volantis
   rank: 2
-  clan: 3
+  clan: 7
   texte: "Le joueur avec le plus de cartes en jeu sacrifie une carte, puis le joueur
     avec le plus de cartes en main d\xE9fausse une carte."
   passif: 

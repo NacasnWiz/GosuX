@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Fenghuang
   nom: Fenghuang
   rank: 3
-  clan: 5
+  clan: 13
   texte: "Cherchez dans votre deck une carte nomm\xE9e *Phoenix*, puis m\xE9langez
     votre deck et placez la carte choisie sur celui-ci."
   passif: 

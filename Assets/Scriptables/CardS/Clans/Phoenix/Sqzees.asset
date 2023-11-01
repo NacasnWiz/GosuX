@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Sqeezs
   nom: Sqeez
   rank: 2
-  clan: 5
+  clan: 13
   texte: "R\xE9v\xE9lez les 3 prochaines cartes de votre deck : placez-en une dans
     votre main, une sur votre deck et la derni\xE8re sous votre deck."
   passif: 

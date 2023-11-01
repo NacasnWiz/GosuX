@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Ne'o
   nom: Ne_o
   rank: 3
-  clan: 6
+  clan: 17
   texte: "Piochez 3 cartes, puis d\xE9faussez 3 cartes."
   passif: 
   "forceDeVolont\xE9": 0

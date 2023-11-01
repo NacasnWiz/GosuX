@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Genious
   nom: Genious
   rank: 3
-  clan: 5
+  clan: 13
   texte: "Chaque joueur choisit un clan et m\xE9lange toutes les cartes correspondantes
     depuis sa d\xE9fausse avec son deck, puis piochez 2 cartes."
   passif: 

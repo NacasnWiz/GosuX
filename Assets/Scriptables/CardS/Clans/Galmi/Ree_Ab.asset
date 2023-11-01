@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Ree Ab
   nom: Ree_Ab
   rank: 3
-  clan: 1
+  clan: 3
   texte: "Choisissez jusqu'\xE0 *X* cartes de votre d\xE9fausse : placez-les sur
     le sommet de votre deck dans l'ordre de votre choix, puis piochez 1 carte."
   passif: 

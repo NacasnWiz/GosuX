@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: "Les fl\xE8ches de Justice"
   nom: "Les_fl\xE8ches_de_Justice"
   rank: 2
-  clan: 3
+  clan: 7
   texte: "Regardez la main de votre adversaire et nommez une carte. Jusqu'\xE0 la
     fin de votre prochain tour, votre adversaire ne peut pas jouer cette carte."
   passif: 

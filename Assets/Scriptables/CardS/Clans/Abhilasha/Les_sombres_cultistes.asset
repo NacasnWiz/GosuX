@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Les sombres cultistes
   nom: Les_sombres_cultistes
   rank: 2
-  clan: 0
+  clan: 2
   texte: Copiez l'effet d'une carte dans cette ligne ou cette colonne.
   passif: 
   "forceDeVolont\xE9": 0

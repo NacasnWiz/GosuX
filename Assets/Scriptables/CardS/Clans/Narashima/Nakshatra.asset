@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Nakshatra
   nom: Nakshatra
   rank: 2
-  clan: 4
+  clan: 11
   texte: "Placez les *X* premi\xE8res cartes de votre deck dans votre d\xE9fausse
     puis ajoutez une carte de niveau I depuis votre d\xE9fausse \xE0 votre main.
     Vous pouvez choisir une carte de niveau II ou III si vous avez un *Jeton Supr\xE9matie*."

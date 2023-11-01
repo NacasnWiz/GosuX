@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Smook
   nom: Smook
   rank: 3
-  clan: 2
+  clan: 5
   texte: "Ajoutez \xE0 votre main jusqu'\xE0 *X* cartes *V\xE9t\xE9ran* depuis votre
     d\xE9fausse (maximum une de chaque niveau), puis si *X* est \xE9gal \xE0 4, jouez
     un tour additionnel apr\xE8s celui-ci."

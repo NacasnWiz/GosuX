@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: "Les f\xE9es p\xE9tale"
   nom: "Les_f\xE9es_p\xE9tales"
   rank: 2
-  clan: 3
+  clan: 7
   texte: "Chaque joueur r\xE9cup\xE8re un *Jeton d'Activation* puis capturez une
     carte *Prime*."
   passif: 

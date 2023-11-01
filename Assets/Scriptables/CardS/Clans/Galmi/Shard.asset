@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Shard
   nom: Shard
   rank: 3
-  clan: 1
+  clan: 3
   texte: "R\xE9v\xE9lez les 4 prochaines cartes de votre deck : ajoutez \xE0 votre
     main la carte de votre choix et placez le reste dans votre d\xE9fausse."
   passif: 

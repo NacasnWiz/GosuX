@@ -36,7 +36,7 @@ public class CardModel : MonoBehaviour //TODO review encapsulation of public mem
     public int battleValue{ get; private set; }
     public string nom{ get; private set; }
     public int clan { get; private set; }
-    public CardSO.Rank rank { get; private set; }
+    public CardSO.Ranks rank { get; private set; }
 
 
 
