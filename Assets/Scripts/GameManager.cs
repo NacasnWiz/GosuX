@@ -148,6 +148,7 @@ public class GameManager : MonoBehaviour
 
         _player.hasPassed = false;
         _opponent.hasPassed = false;
+        nb_turnsAfterPassed = 0;
     }
 
     private void CreatePlayersDictionary()

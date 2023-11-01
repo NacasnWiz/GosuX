@@ -235,11 +235,14 @@ public class RulesManager : MonoBehaviour
 
         CrownRoundWinner();
         
-        if(lastRoundWinner.SupremacyPoint > 1)//if the player who've just won the round has more than one Supremacy point
+        foreach(Player player in GameManager.Instance.players.Values)
         {
-            ev_GameEnded.Invoke(lastRoundWinner);//He wins the game and the game ends here.
-            currentPhase = GamePhases.GameEndedPhase;
-            return;
+            if (player.SupremacyPoint > 1)//if the player who've just won the round has more than one Supremacy point
+            {
+                ev_GameEnded.Invoke(lastRoundWinner);//He wins the game and the game ends here.
+                currentPhase = GamePhases.GameEndedPhase;
+                return;
+            }
         }
 
         ev_RoundEnded.Invoke(lastRoundWinner);
@@ -252,7 +255,7 @@ public class RulesManager : MonoBehaviour
 
     private int CalculateToSacrifice(Player player)
     {
-        int output = 0;
+        int output;
         int playerArmySize = player._army._size;
 
         output = playerArmySize / 2 + playerArmySize % 2;
