@@ -145,6 +145,9 @@ public class GameManager : MonoBehaviour
     {
         _player.DrawCards(nb_maxCardsInHand - _player._hand._size);
         _opponent.DrawCards(nb_maxCardsInHand - _opponent._hand._size);
+
+        _player.hasPassed = false;
+        _opponent.hasPassed = false;
     }
 
     private void CreatePlayersDictionary()
