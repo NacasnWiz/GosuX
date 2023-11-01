@@ -14,6 +14,8 @@ public class Hand : MonoBehaviour
     [field : SerializeField]
     public Player owner { get; private set; }
 
+    public int _size => cardsHeld.Count;
+
     private void Start()
     {
         AdjustCardsPos();

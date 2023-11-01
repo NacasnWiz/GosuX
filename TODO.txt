@@ -6,10 +6,13 @@ DONE - Interdire la pose d'une Troupe si on n'a pas de quoi payer.
 
 
 TODO: (medium)
-_faible - Army doit connaître en permanence les cartes LIBRE
+DONE _faible - Army doit connaître en permanence les cartes LIBRE
+- Redraw to 7 at the end of a round.
+_later - Find a better proc on New Round than ev_ExitSacrificePhase
+
 
 TODO: (hard)
-- Implémenter une boucle de jeu Player -> Opponent -> Player etc. (les cartes sont toujours sans effet)
+DONE - Implémenter une boucle de jeu Player -> Opponent -> Player etc. (les cartes sont toujours sans effet)
 
 
 TODO: (TRISTAN)

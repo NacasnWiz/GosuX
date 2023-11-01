@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private CardSO.Clans[] unplayedClans = new CardSO.Clans[2];
 
-    public int nb_cardsDrawnStart = 7;
+    public int nb_maxCardsInHand = 7;
     public int nb_maxTurnsAfterPass = 3;
 
 
@@ -121,14 +121,15 @@ public class GameManager : MonoBehaviour
         RulesManager.Instance.ev_CurrentPlayerHasPlayed.AddListener(() => { Debug.Log("current player has played."); currentPlayerHasPlayed = true; });
         RulesManager.Instance.ev_RoundEnded.AddListener((winner) => Debug.Log("The round ended! " + winner.ID + " wins the round. (Sacrifice Phase is to be implemented)"));
         RulesManager.Instance.ev_GameEnded.AddListener((winner) => Debug.Log("The game has ended. Winner is" + winner.ID));
+        RulesManager.Instance.ev_ExitSacrificePhase.AddListener(() => StartNewRound());
 
         FillDeck(_player);
         _player.ShuffleDeck();
         FillDeck(_opponent);
         _opponent.ShuffleDeck();
 
-        _player.DrawCards(nb_cardsDrawnStart);
-        _opponent.DrawCards(nb_cardsDrawnStart);
+        _player.DrawCards(nb_maxCardsInHand);
+        _opponent.DrawCards(nb_maxCardsInHand);
     }
 
     private void LateUpdate()
@@ -137,6 +138,12 @@ public class GameManager : MonoBehaviour
         {
             EndTurn();
         }
+    }
+
+    private void StartNewRound()
+    {
+        _player.DrawCards(nb_maxCardsInHand - _player._hand._size);
+        _opponent.DrawCards(nb_maxCardsInHand - _player._hand._size);
     }
 
     private void CreatePlayersDictionary()
