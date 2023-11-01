@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Cylak
   nom: Cylak
   rank: 3
-  clan: 0
+  clan: 2
   texte: Chaque joueur peut capturer une carte adverse de niveau III.
   passif: 
   "forceDeVolont\xE9": 0

@@ -19,21 +19,25 @@ public class CardModel : MonoBehaviour //TODO review encapsulation of public mem
 
     [field : SerializeField]
     public Vector3 baseScale { get; private set; } = new Vector3(17f, 22f, 1f);
-
-    public bool isShownOver = false;
-    public bool isInHand = false;
-    public bool isInToDiscard = false;
-
-
-    public int currentActivations;
-    public int battleValue;
-
     [SerializeField]
     private float hoverHeight = 5f;
     private float lastPosY;
     [SerializeField]
     private float hoverScaleFactor = 1.1f;
     private float lastScaleFactor;
+
+    public bool isShownOver = false;
+    public bool isInHand = false;
+    public bool isInArmy = false;
+    public bool isInToDiscard = false;
+
+
+    public int currentActivations{ get; private set; }
+    public int battleValue{ get; private set; }
+    public string nom{ get; private set; }
+    public int clan { get; private set; }
+    public CardSO.Rank rank { get; private set; }
+
 
 
     public static UnityEvent<CardModel> ev_CardClicked = new();
@@ -49,6 +53,9 @@ public class CardModel : MonoBehaviour //TODO review encapsulation of public mem
     {
         _cardSO = so;
         battleValue = (int)_cardSO.rank;
+        nom = so.nom;
+        clan = (int)so.clan;
+        rank = so.rank;
 
         meshRenderer.material.mainTexture = _cardSO.sprite.texture;
     }

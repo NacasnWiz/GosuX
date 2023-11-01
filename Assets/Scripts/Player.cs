@@ -20,6 +20,8 @@ public class Player : MonoBehaviour
 
     public bool hasPassed = false;
 
+    public int SupremacyPoint = 0;
+
     //Camera ?
 
     public void AddCardsToDeck(List<CardSO> cards)

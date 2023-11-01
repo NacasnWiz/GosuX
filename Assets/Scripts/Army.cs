@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
+using System.Linq;
 
 public class Army : MonoBehaviour
 {
@@ -20,10 +20,12 @@ public class Army : MonoBehaviour
 
     public Vector3[,] cardSpots { get; private set; }
 
-    private Dictionary<CardSO.Rank, List<CardModel>> rows = new();
+    private Dictionary<CardSO.Rank, List<CardModel>> rows = new();//We will rely on the fact that a CardModel card is always in its card.rank's row.
 
-    [field : SerializeField]
+    [field: SerializeField]
     public Player owner { get; private set; }
+
+    public int _battleScore => GetBattleScore();
 
     [SerializeField]
     private GameObject dummy;
@@ -117,27 +119,28 @@ public class Army : MonoBehaviour
 
         cardToReceive.transform.SetParent(transform);
         cardToReceive.transform.localScale = boardDimensions.cardScaleOnBoard;
-        rows[cardToReceive._cardSO.rank].Add(cardToReceive);
+        rows[cardToReceive.rank].Add(cardToReceive);
+        cardToReceive.isInArmy = true;
     }   
 
 
 
     public bool CanReceiveCard(CardModel cardToReceive)
     {
-        if (!rows.ContainsKey(cardToReceive._cardSO.rank))
+        if (!rows.ContainsKey(cardToReceive.rank))
         {
             Debug.Log("The board doesn't have a row for this card's rank. " + cardToReceive._cardSO.cardName + " Cannot be played");
             return false;
         }
-        if (rows[cardToReceive._cardSO.rank].Count >= CARDS_IN_ROW)
+        if (rows[cardToReceive.rank].Count >= CARDS_IN_ROW)
         {
-            Debug.Log("The " + cardToReceive._cardSO.rank.ToString() + " army row is full. It already contains " + rows[cardToReceive._cardSO.rank].Count + " cards, for a maximal capacity of " + CARDS_IN_ROW);
+            Debug.Log("The " + cardToReceive.rank.ToString() + " army row is full. It already contains " + rows[cardToReceive.rank].Count + " cards, for a maximal capacity of " + CARDS_IN_ROW);
             return false;
         }
 
 
         bool containsTroupeOfSameClan = ContainsClan(CardSO.Rank.Troupe, cardToReceive._cardSO.clan);
-        switch (cardToReceive._cardSO.rank)
+        switch (cardToReceive.rank)
         {
             case CardSO.Rank.Troupe:
                 if (rows[CardSO.Rank.Troupe].Count > 0 && !containsTroupeOfSameClan)
@@ -162,15 +165,19 @@ public class Army : MonoBehaviour
 
     private bool ContainsClan(CardSO.Rank rank, CardSO.Clan clan)
     {
-        bool output = false;
-
         List<CardModel> row = rows[rank];
 
-        foreach (CardModel card in row)
+        return CountCardsOfClan(row, clan) > 0;
+    }
+
+    private int CountCardsOfClan(List<CardModel> cardList, CardSO.Clan clan)
+    {
+        int output = 0;
+        foreach (CardModel card in cardList)
         {
-            if (card._cardSO.clan == clan)
+            if (card.clan % (int)clan == 0)
             {
-                output = true;
+                ++output;
             }
         }
 
@@ -179,7 +186,7 @@ public class Army : MonoBehaviour
 
     private bool ContainsClan(CardSO.Clan clan)
     {
-        return ContainsClan(CardSO.Rank.Troupe, clan) && ContainsClan(CardSO.Rank.Héros, clan) && ContainsClan(CardSO.Rank.Immortel, clan);
+        return ContainsClan(CardSO.Rank.Troupe, clan) || ContainsClan(CardSO.Rank.Héros, clan) || ContainsClan(CardSO.Rank.Immortel, clan);
     }
 
     public int CalculateBattleScore()
@@ -221,6 +228,71 @@ public class Army : MonoBehaviour
         spot[1] = rows[cardSO.rank].Count < 5 ? rows[cardSO.rank].Count : -1;
 
         return spot;
+    }
+
+    public void RemoveCard(CardModel card)
+    {
+        if (!ContainsCard(card))
+        {
+            Debug.Log("You're trying to remove" + card.nom + ", but it is not present in" + owner.ID + "'s army.");
+            return;
+        }
+
+        rows[card.rank].Remove(card);
+    }
+
+    private bool ContainsCard(CardModel card)
+    {
+        return rows[CardSO.Rank.Troupe].Contains(card) || rows[CardSO.Rank.Héros].Contains(card) || rows[CardSO.Rank.Immortel].Contains(card);
+    }
+
+    public bool IsLIBRE(CardModel card)//Following the rules, a card is LIBRE if and only if it is at the end of its row, and at the top of its column.
+    {
+        if (!ContainsCard(card))
+        {
+            Debug.Log(card.nom + " doesn't belong to " + owner.ID + "'s army.");
+            return false;
+        }
+
+        List<CardModel> cardColumn = GetColumn(card);
+
+        return rows[card.rank].Last() == card && cardColumn.Last() == card;
+
+    }
+
+    private List<CardModel> GetColumn(CardModel card)
+    {
+        List<CardModel> column = new();
+        int index = rows[card.rank].IndexOf(card);
+
+        if (rows[CardSO.Rank.Troupe].Count > index)//in case one day I'll want to allow above rows to be longer than below ones
+        {
+            column.Add(rows[CardSO.Rank.Troupe][index]);
+        }
+        if (rows[CardSO.Rank.Héros].Count > index)
+        {
+            column.Add(rows[CardSO.Rank.Héros][index]);
+        }
+        if (rows[CardSO.Rank.Immortel].Count > index)//security checks
+        {
+            column.Add(rows[CardSO.Rank.Immortel][index]);
+        }
+
+        return column;
+    }
+
+    public int GetBattleScore()
+    {
+        int score = 0;
+
+        foreach(List<CardModel> row in rows.Values)
+        {
+            foreach(CardModel card in row)
+            {
+                score += card.battleValue;
+            }
+        }
+        return score;
     }
 
 }

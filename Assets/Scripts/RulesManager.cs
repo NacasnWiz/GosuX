@@ -20,11 +20,13 @@ public class RulesManager : MonoBehaviour
         }
     }
 
-
     public enum GamePhases
     {
-        PlayPhase,
-        DiscardPhase,
+        PlayPhase = 1,
+        DiscardPhase = 2,
+        BattlePhase = 3,//a cinematic, kind of
+        SacrificePhase = 4,
+        GameEndedPhase = 5,
     }
 
     public static int CARDS_IN_ROW { get; private set; } = 5;
@@ -32,26 +34,48 @@ public class RulesManager : MonoBehaviour
 
     public int costOfNewClanTroupe { get; private set; } = 2;
 
-    [SerializeField]
-    public GamePhases currentPhase = GamePhases.PlayPhase;
+    [field: SerializeField]
+    public GamePhases currentPhase { get; private set; } = GamePhases.PlayPhase;
 
-    public Dictionary<GameManager.Players, int> toDiscard { get; private set; } = new Dictionary<GameManager.Players, int>();
+    public Dictionary<GameManager.Players, int> toDiscard { get; private set; } = new();
+    public Dictionary<GameManager.Players, int> toSacrifice { get; private set; } = new();
+
+    public Player lastRoundWinner { get; private set; }
 
 
     public UnityEvent ev_EnterDiscardPhase = new();
     public UnityEvent ev_CurrentPlayerHasPlayed = new();
+    public UnityEvent<Player> ev_RoundEnded = new();
+    public UnityEvent<Player> ev_GameEnded = new();
+
 
 
     private void Awake()
     {
-        _instance = this;
+        if (_instance == null)
+        {
+            _instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void Start()
     {
         CardModel.ev_CardClicked.AddListener((card) => OnCardClicked(card));
 
-        CreateToDiscardDictionnary();
+        CreateDictionnaries();
+    }
+
+    private void CreateDictionnaries()
+    {
+        toDiscard.Add(GameManager.Players.Player, 0);
+        toDiscard.Add(GameManager.Players.Opponent, 0);
+
+        toSacrifice.Add(GameManager.Players.Player, 0);
+        toSacrifice.Add(GameManager.Players.Opponent, 0);
     }
 
     private bool IsPendingDiscards()
@@ -79,6 +103,17 @@ public class RulesManager : MonoBehaviour
                     return;
 
                 default:
+                    return;
+            }
+        }
+        else if (card.isInArmy)
+        {
+            switch (currentPhase)
+            {
+                case GamePhases.SacrificePhase:
+                    card.owner._army.RemoveCard(card);
+                    card.owner._discardPile.AddCard(card);
+                    Destroy(card.gameObject);
                     return;
             }
         }
@@ -122,11 +157,7 @@ public class RulesManager : MonoBehaviour
         currentPhase = GamePhases.PlayPhase;
     }
 
-    private void CreateToDiscardDictionnary()
-{
-        toDiscard.Add(GameManager.Players.Player, 0);
-        toDiscard.Add(GameManager.Players.Opponent, 0);
-    }
+
 
     public void RequireDiscard(GameManager.Players who, int cost)
     {
@@ -150,4 +181,45 @@ public class RulesManager : MonoBehaviour
         ev_EnterDiscardPhase.Invoke();
     }
 
+    private void EnterSacrificePhase()
+    {
+        currentPhase = GamePhases.SacrificePhase;
+    }
+
+
+    public void EndRound()
+    {
+        Debug.Log("The round has ended.");
+
+        CrownRoundWinner();
+        
+        if(lastRoundWinner.SupremacyPoint > 1)//if the player who've just won the round has more than one Supremacy point
+        {
+            ev_GameEnded.Invoke(lastRoundWinner);//He wins the game and the game ends here.
+            currentPhase = GamePhases.GameEndedPhase;
+            return;
+        }
+
+        ev_RoundEnded.Invoke(lastRoundWinner);
+
+        EnterSacrificePhase();
+    }
+
+    private void CrownRoundWinner()
+    {
+        lastRoundWinner = GameManager.Instance.GetBestArmyPlayer();
+        if (lastRoundWinner == null)//there have been a stalemate
+        {
+            foreach (Player player in GameManager.Instance.players.Values)
+            {
+                player.SupremacyPoint += 1;
+            }
+            Debug.Log("There is a stalemate. Stalemates are not handled yet.");
+            //ev_ThereHaveBeenAStalemate.Invoke();
+        }
+        else
+        {
+            lastRoundWinner.SupremacyPoint += 1;
+        }
+    }
 }

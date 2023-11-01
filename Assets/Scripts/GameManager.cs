@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     public enum Players
     {
         Player = 1,
+        None = 0,
         Opponent = -1
     }
 
@@ -32,7 +33,7 @@ public class GameManager : MonoBehaviour
     public CardSO[] ALL_CARDS_LIST {get; private set;}
 
     [SerializeField]
-    private Dictionary<CardSO.Clan, List<CardSO>> ALL_CLANS_CARDS = new Dictionary<CardSO.Clan, List<CardSO>>();
+    private Dictionary<CardSO.Clan, List<CardSO>> ALL_CLANS_CARDS = new();
 
     //[SerializeField]
     //private CardSO.Clan[] playerClans = new CardSO.Clan[3];
@@ -82,7 +83,7 @@ public class GameManager : MonoBehaviour
     public bool currentPlayerHasPlayed = false;
 
 
-    public UnityEvent ev_RoundEnded = new();
+    public UnityEvent<Player> ev_TurnEnded = new();
 
 
     private void Awake()
@@ -101,13 +102,15 @@ public class GameManager : MonoBehaviour
 
     private void SetClansCardsLists()
     {
+        int clanCount = 0;
         foreach (CardSO.Clan clan in Enum.GetValues(typeof(CardSO.Clan)))
         {
             ALL_CLANS_CARDS.Add(clan, new List<CardSO>());
             for (int i = 0; i < 11; ++i)
             {
-                ALL_CLANS_CARDS[clan].Add(ALL_CARDS_LIST[i + (int)clan * 11]);
+                ALL_CLANS_CARDS[clan].Add(ALL_CARDS_LIST[i + clanCount * 11]);
             }
+            ++clanCount;
         }
     }
 
@@ -116,6 +119,8 @@ public class GameManager : MonoBehaviour
     {
         CreatePlayersDictionary();
         RulesManager.Instance.ev_CurrentPlayerHasPlayed.AddListener(() => { Debug.Log("current player has played."); currentPlayerHasPlayed = true; });
+        RulesManager.Instance.ev_RoundEnded.AddListener((winner) => Debug.Log("The round ended! " + winner.ID + " wins the round. (Sacrifice Phase is to be implemented)"));
+        RulesManager.Instance.ev_GameEnded.AddListener((winner) => Debug.Log("The game has ended. Winner is" + winner.ID));
 
         FillDeck(_player);
         _player.ShuffleDeck();
@@ -174,6 +179,7 @@ public class GameManager : MonoBehaviour
     public void Pass()
     {
         currentPlayer.hasPassed = true;
+        Debug.Log(currentPlayer + " has passed.");
         EndTurn();
     }
 
@@ -181,25 +187,6 @@ public class GameManager : MonoBehaviour
     {
         opponentCamera.Priority = 10;
         playerCamera.Priority = 15;
-    }
-
-    public void EndTurn()
-    {
-        if (players[GetOtherPlayer(currentPlayer).ID].hasPassed)
-        {
-            ++nb_turnsAfterPassed;
-        }
-        else
-        {
-            currentPlayer = GetOtherPlayer(currentPlayer);
-        }
-
-        currentPlayerHasPlayed = false;
-
-        if(nb_turnsAfterPassed >= nb_maxTurnsAfterPass || (currentPlayer.hasPassed && GetOtherPlayer(currentPlayer).hasPassed))
-        {
-            EndRound();
-        }
     }
 
     private Player GetOtherPlayer(Player player)
@@ -217,10 +204,45 @@ public class GameManager : MonoBehaviour
         //currentPlayer = players[(Players)(-(int)currentPlayer)];
     }
 
-    private void EndRound()
+    public void EndTurn()
     {
-        Debug.Log("The round has ended.");
-        ev_RoundEnded.Invoke();
+        ev_TurnEnded.Invoke(currentPlayer);
+
+        if (players[GetOtherPlayer(currentPlayer).ID].hasPassed)
+        {
+            ++nb_turnsAfterPassed;
+        }
+        else
+        {
+            currentPlayer = GetOtherPlayer(currentPlayer);
+        }
+
+        currentPlayerHasPlayed = false;
+
+        if(nb_turnsAfterPassed >= nb_maxTurnsAfterPass || (currentPlayer.hasPassed && GetOtherPlayer(currentPlayer).hasPassed))
+        {
+            RulesManager.Instance.EndRound();
+        }
     }
+
+    public Player GetBestArmyPlayer()
+    {
+        int _playerBattleScore = _player._army._battleScore;
+        int _opponentBattleScore = _opponent._army._battleScore;
+        if (_playerBattleScore > _opponentBattleScore)
+        {
+            return _player;
+        }
+        else if (_playerBattleScore < _opponentBattleScore)
+        {
+            return _opponent;
+        }
+        else
+        {
+            Debug.Log("Both players have same battleScore of " + _opponentBattleScore);
+            return null;
+        }
+    }
+
 
 }

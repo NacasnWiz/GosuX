@@ -24,6 +24,10 @@ public class UIManager : MonoBehaviour
     private Button confirmDiscardButton;
     [SerializeField] private Button seeOpponentButton;
     [SerializeField] private Button returnToPlayerButton;
+    [SerializeField] private TMP_Text playerArmyScoreText;
+    [SerializeField] private TMP_Text opponentArmyScoreText;
+    [SerializeField] private Image playerSupremacyPoint;
+    [SerializeField] private Image opponentSupremacyPoint;
 
 
     [SerializeField]
@@ -75,6 +79,9 @@ public class UIManager : MonoBehaviour
         RulesManager.Instance.ev_EnterDiscardPhase.AddListener(() => DisplayToDiscardPanel());
         Deck.ev_DeckClicked.AddListener((deck) => DisplayDeckCards(deck));
         DiscardPile.ev_DiscardPileClicked.AddListener((discardPile) => DisplayDiscardPileCards(discardPile));
+        GameManager.Instance.ev_TurnEnded.AddListener((player) => UpdateArmyScoreText(player));
+        RulesManager.Instance.ev_RoundEnded.AddListener((winner) => UpdateSupremacyPointDisplay(winner));
+
     }
 
     private void Awake()
@@ -84,7 +91,7 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
-        if(currentPanel != null)
+        if (currentPanel != null)
         {
             if (Mathf.Abs(Input.GetAxis("Mouse ScrollWheel")) > 0.05f && _displayedCards.Count > 2 * CARDS_PER_ROW)
             {
@@ -94,7 +101,7 @@ public class UIManager : MonoBehaviour
 
                 AdjustDisplayedCardsTransform();
             }
-            
+
         }
     }
 
@@ -114,7 +121,7 @@ public class UIManager : MonoBehaviour
 
             default: break;
         }
-        
+
     }
 
     public void DisplayDiscardPileCards(DiscardPile discardPile)
@@ -136,7 +143,7 @@ public class UIManager : MonoBehaviour
 
     private void DisplayCards(GameObject displayPanel, List<CardSO> cards, GameManager.Players owner)
     {
-        if(isDisplayingCards)
+        if (isDisplayingCards)
         {
             return;
         }
@@ -282,7 +289,7 @@ public class UIManager : MonoBehaviour
 
     private void AdjustConfirmDiscardButtonDisplay()
     {
-         confirmDiscardButton.gameObject.SetActive(!NeedToDiscardMoreCards());
+        confirmDiscardButton.gameObject.SetActive(!NeedToDiscardMoreCards());
     }
 
 
@@ -294,13 +301,13 @@ public class UIManager : MonoBehaviour
         {
             float offsetX = toDiscardBaseOffsetX * nb_cardsToDiscard * 0.5f;
             Debug.Log("Bump");
-            cardsDiscarding[index].SetPos((2f+index * 0.1f) * Vector3.up + _toDiscardPanel.transform.position + offsetX * Vector3.left + (3+index * toDiscardBaseOffsetX) * Vector3.right);
+            cardsDiscarding[index].SetPos((2f + index * 0.1f) * Vector3.up + _toDiscardPanel.transform.position + offsetX * Vector3.left + (3 + index * toDiscardBaseOffsetX) * Vector3.right);
         }
     }
 
     private void AdjustToDiscardText()
     {
-        if(nb_cardsToDiscard > 0)
+        if (nb_cardsToDiscard > 0)
         {
             toDiscardText.text = "Discard " + nb_cardsToDiscard + " cards. (" + (nb_cardsToDiscard - cardsDiscarding.Count) + " more)";
         }
@@ -320,8 +327,8 @@ public class UIManager : MonoBehaviour
     }
 
     private void FlushCardsDiscarding()
-    {      
-        foreach(CardModel card in cardsDiscarding)
+    {
+        foreach (CardModel card in cardsDiscarding)
         {
             GameManager.Instance.players[GameManager.Instance.currentPlayer.ID]._hand.RemoveCard(card);
             GameManager.Instance.players[GameManager.Instance.currentPlayer.ID]._discardPile.AddCard(card);
@@ -337,6 +344,38 @@ public class UIManager : MonoBehaviour
         card.isInToDiscard = false;
         GameManager.Instance.players[GameManager.Instance.currentPlayer.ID]._hand.AdjustCardsPos();
         AdjustDiscardingDisplay();
+    }
+
+    private void UpdateArmyScoreText(Player player)
+    {
+        if (player.ID == GameManager.Players.Player)
+        {
+            playerArmyScoreText.text = player._army._battleScore.ToString();
+        }
+        else if (player.ID == GameManager.Players.Opponent)
+        {
+            opponentArmyScoreText.text = player._army._battleScore.ToString();
+        }
+    }
+
+    private void UpdateSupremacyPointDisplay(Player winner)
+    {
+        if (winner != null)
+        {
+            if (winner.ID == GameManager.Players.Player)
+            {
+                playerSupremacyPoint.gameObject.SetActive(true);
+            }
+            else if (winner.ID == GameManager.Players.Opponent)
+            {
+                opponentSupremacyPoint.gameObject.SetActive(true);
+            }
+        }
+        else
+        {
+            opponentSupremacyPoint.gameObject.SetActive(true);
+            playerSupremacyPoint.gameObject.SetActive(true);
+        }
     }
 
 }

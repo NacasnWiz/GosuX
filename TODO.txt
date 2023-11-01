@@ -14,3 +14,8 @@ TODO: (hard)
 
 TODO: (TRISTAN)
 - Make UI elements block OnMouseEnter/Stay/Exit, OnMouseDown/Up
+
+
+Q -
+. Should I ùerge RulesManager and GameManager in a unique class using partial ?
+ANSWER IS **NO** because it becomes a GodObject.
