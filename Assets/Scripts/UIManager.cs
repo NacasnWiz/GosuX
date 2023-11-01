@@ -80,10 +80,11 @@ public class UIManager : MonoBehaviour
     {
         RulesManager.Instance.ev_EnterDiscardPhase.AddListener(() => DisplayToDiscardPanel());
         RulesManager.Instance.ev_EnterSacrificePhase.AddListener(() => {AdjustDummyToSacrificeText(); dummyToSacrificeText.gameObject.SetActive(true); });
+        RulesManager.Instance.ev_CardSacrificed.AddListener((card) => { AdjustDummyToSacrificeText(); AdjustArmyScoresText(); });
         RulesManager.Instance.ev_ExitSacrificePhase.AddListener(() => dummyToSacrificeText.gameObject.SetActive(false));
         Deck.ev_DeckClicked.AddListener((deck) => DisplayDeckCards(deck));
         DiscardPile.ev_DiscardPileClicked.AddListener((discardPile) => DisplayDiscardPileCards(discardPile));
-        GameManager.Instance.ev_TurnEnded.AddListener((player) => UpdateArmyScoreText(player));
+        GameManager.Instance.ev_TurnEnded.AddListener((player) => AdjustArmyScoresText());
         RulesManager.Instance.ev_RoundEnded.AddListener((winner) => UpdateSupremacyPointDisplay(winner));
 
     }
@@ -350,16 +351,10 @@ public class UIManager : MonoBehaviour
         AdjustDiscardingDisplay();
     }
 
-    private void UpdateArmyScoreText(Player player)
+    private void AdjustArmyScoresText()
     {
-        if (player.ID == GameManager.Players.Player)
-        {
-            playerArmyScoreText.text = player._army._battleScore.ToString();
-        }
-        else if (player.ID == GameManager.Players.Opponent)
-        {
-            opponentArmyScoreText.text = player._army._battleScore.ToString();
-        }
+        playerArmyScoreText.text = GameManager.Instance.players[GameManager.Players.Player]._army._battleScore.ToString();
+        opponentArmyScoreText.text = GameManager.Instance.players[GameManager.Players.Opponent]._army._battleScore.ToString();
     }
 
     private void UpdateSupremacyPointDisplay(Player winner)
@@ -382,7 +377,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void AdjustDummyToSacrificeText()
+    private void AdjustDummyToSacrificeText()
     {
         int playerToSacrifice = RulesManager.Instance.toSacrifice[GameManager.Players.Player];
         int opponentToSacrifice = RulesManager.Instance.toSacrifice[GameManager.Players.Opponent];

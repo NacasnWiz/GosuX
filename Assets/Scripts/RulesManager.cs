@@ -45,6 +45,7 @@ public class RulesManager : MonoBehaviour
 
     public UnityEvent ev_EnterDiscardPhase = new();
     public UnityEvent ev_EnterSacrificePhase = new();
+    public UnityEvent<CardModel> ev_CardSacrificed = new();
     public UnityEvent ev_ExitSacrificePhase = new();
     public UnityEvent ev_CurrentPlayerHasPlayed = new();
     public UnityEvent<Player> ev_RoundEnded = new();
@@ -140,10 +141,10 @@ public class RulesManager : MonoBehaviour
         }
         cardToSacrifice.owner._army.RemoveCard(cardToSacrifice);
         cardToSacrifice.owner._discardPile.AddCard(cardToSacrifice);
-        Destroy(cardToSacrifice.gameObject);
         --toSacrifice[cardToSacrifice.owner.ID];
 
-        UIManager.Instance.AdjustDummyToSacrificeText();
+        ev_CardSacrificed.Invoke(cardToSacrifice);
+
 
         if (!IsPendingSacrifices())
         {
